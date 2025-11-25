@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FairCharge - Fair Prices for Your Tickets</title>
+    <meta name="description" content="Sell your unused tickets at fair market prices. AI-powered pricing based on real supply and demand.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #3B9DFF;
+            --dark-blue: #1E3A8A;
+            --text-dark: #1F2937;
+            --text-gray: #6B7280;
+            --bg-light: #F9FAFB;
+            --white: #FFFFFF;
+            --success: #10B981;
+            --warning: #F59E0B;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 48px;
+            height: 48px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .btn-contact {
+            background: var(--primary-blue);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 157, 255, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 16px 40px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--dark-blue);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 0;
+        }
+
+        .flow-container {
+            margin-top: 3rem;
+        }
+
+        .flow-type {
+            margin-bottom: 4rem;
+        }
+
+        .flow-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .flow-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .badge-with-name {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .badge-without-name {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .flow-title {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-subtitle {
+            color: var(--text-gray);
+            font-size: 1rem;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .step-card {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+
+        .step-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .step-card p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        /* Pricing Examples */
+        .pricing-examples {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: scale(1.03);
+        }
+
+        .ticket-type {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .price-comparison {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+
+        .fair-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .savings {
+            background: #DCFCE7;
+            color: #166534;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .pricing-details {
+            border-top: 1px solid #E5E7EB;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .pricing-details p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 80px 0;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 3rem auto 0;
+        }
+
+        .faq-item {
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: var(--bg-light);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.7rem;
+        }
+
+        .footer-section a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">
+                <svg class="logo-img" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="20" width="160" height="160" rx="30" fill="#3B9DFF"/>
+                    <path d="M60 100 L90 130 L140 70" stroke="white" stroke-width="15" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="30" y="140" width="140" height="10" rx="5" fill="white" opacity="0.3"/>
+                    <rect x="40" y="155" width="120" height="10" rx="5" fill="white" opacity="0.3"/>
+                </svg>
+                <span class="logo-text">FairCharge</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><button class="btn-contact" onclick="window.location.href='mailto:info@faircharge.com'">Contact Us</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Get Fair Prices for Your Tickets</h1>
+            <p>AI-powered marketplace that gives you honest prices based on real supply and demand. No hidden fees, no unfair markups.</p>
+            <div class="hero-buttons">
+                <a href="#how-it-works" class="btn-primary">Learn How It Works</a>
+                <a href="mailto:info@faircharge.com" class="btn-secondary">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose FairCharge?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Fair AI Pricing</h3>
+                    <p>Our algorithm analyzes real-time supply and demand to ensure you get the fairest market price for your tickets.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast & Simple</h3>
+                    <p>List your ticket in minutes. For non-name-change tickets, connect directly with buyers instantly.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure Transactions</h3>
+                    <p>We handle all payments securely and work with service providers for seamless name changes when required.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            
+            <div class="flow-container">
+                <!-- With Name Change -->
+                <div class="flow-type">
+                    <div class="flow-header">
+                        <span class="flow-badge badge-with-name">Requires Name Change</span>
+                        <h3 class="flow-title">Flight Tickets</h3>
+                        <p class="flow-subtitle">We coordinate with airlines for official name changes</p>
+                    </div>
+                    <div class="steps-grid">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <h4>List Your Ticket</h4>
+                            <p>Upload your flight details and our AI calculates the fair price</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <h4>We Find a Buyer</h4>
+                            <p>We match you with interested buyers on our platform</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <h4>Official Transfer</h4>
+                            <p>We coordinate with the airline for legal name change</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">4</div>
+                            <h4>Get Paid</h4>
+                            <p>Receive your fair price directly to your account</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Without Name Change -->
+                <div class="flow-type">
+                    <div class="flow-header">
+                        <span class="flow-badge badge-without-name">No Name Change Needed</span>
+                        <h3 class="flow-title">Buses, Trains, Events & Concerts</h3>
+                        <p class="flow-subtitle">Direct buyer-seller transactions through our secure platform</p>
+                    </div>
+                    <div class="steps-grid">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <h4>List Your Ticket</h4>
+                            <p>Post your ticket with AI-suggested fair pricing</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <h4>Buyers Bid or Buy</h4>
+                            <p>Accept instant offers or let buyers compete through auction</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <h4>Instant Transfer</h4>
+                            <p>Ticket transfers immediately after payment confirmation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Examples -->
+    <section class="pricing-examples" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Real Pricing Examples</h2>
+            <p style="text-align: center; color: var(--text-gray); margin-bottom: 1rem;">See how our AI determines fair prices based on supply and demand</p>
+            
+            <div class="pricing-grid">
+                <!-- Flight - High Demand -->
+                <div class="pricing-card">
+                    <span class="ticket-type">✈️ Flight</span>
+                    <h3>NYC to LA</h3>
+                    <div class="price-comparison">
+                        <span class="original-price">$450</span>
+                        <span class="fair-price">$520</span>
+                    </div>
+                    <span class="savings">+$70 Premium</span>
+                    <div class="pricing-details">
+                        <p><strong>Status:</strong> Flight 95% sold out</p>
+                        <p><strong>Demand:</strong> High (Holiday weekend)</p>
+                        <p><strong>Process:</strong> Name change required</p>
+                    </div>
+                </div>
+
+                <!-- Concert - Very High Demand -->
+                <div class="pricing-card">
+                    <span class="ticket-type">🎵 Concert</span>
+                    <h3>Taylor Swift - Miami</h3>
+                    <div class="price-comparison">
+                        <span class="original-price">$250</span>
+                        <span class="fair-price">$380</span>
+                    </div>
+                    <span class="savings">+$130 Premium</span>
+                    <div class="pricing-details">
+                        <p><strong>Status:</strong> Sold out venue</p>
+                        <p><strong>Demand:</strong> Very High</p>
+                        <p><strong>Process:</strong> Direct transfer</p>
+                    </div>
+                </div>
+
+                <!-- Train - Low Demand -->
+                <div class="pricing-card">
+                    <span class="ticket-type">🚂 Train</span>
+                    <h3>Amtrak Regional</h3>
+                    <div class="price-comparison">
+                        <span class="original-price">$85</span>
+                        <span class="fair-price">$72</span>
+                    </div>
+                    <span class="savings" style="background: #FEE2E2; color: #991B1B;">-$13 Discount</span>
+                    <div class="pricing-details">
+                        <p><strong>Status:</strong> 40% capacity</p>
+                        <p><strong>Demand:</strong> Low (Mid-week)</p>
+                        <p><strong>Process:</strong> Direct transfer</p>
+                    </div>
+                </div>
+
+                <!-- Bus - Medium Demand -->
+                <div class="pricing-card">
+                    <span class="ticket-type">🚌 Bus</span>
+                    <h3>Greyhound Express</h3>
+                    <div class="price-comparison">
+                        <span class="original-price">$45</span>
+                        <span class="fair-price">$45</span>
+                    </div>
+                    <span class="savings" style="background: #E0E7FF; color: #3730A3;">Market Rate</span>
+                    <div class="pricing-details">
+                        <p><strong>Status:</strong> 60% capacity</p>
+                        <p><strong>Demand:</strong> Medium</p>
+                        <p><strong>Process:</strong> Direct transfer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How does FairCharge determine prices?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Our AI algorithm analyzes multiple factors including current demand, remaining capacity, time until event/departure, historical pricing data, and market trends to calculate a fair market price for your ticket.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What types of tickets can I sell?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        You can sell flight tickets (with name change coordination), train tickets, bus tickets, concert tickets, event tickets, and any other transferable tickets. We handle both scenarios: tickets requiring official name changes and those that can be transferred directly.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How long does the process take?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        For direct transfer tickets (buses, trains, events), the process is instant once a buyer is found. For name-change tickets (flights), it typically takes 24-48 hours as we coordinate with the service provider for official documentation.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is it legal to resell tickets?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes! We work directly with service providers and follow all legal requirements. For name changes, we coordinate officially with airlines and other providers. For transferable tickets, we ensure all terms of service are respected.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What fees does FairCharge charge?
+                        <span>▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        We charge a small service fee (typically 5-10%) that covers our platform, payment processing, and coordination with service providers. The exact fee is shown transparently before you confirm your listing.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FairCharge</h3>
+                    <p>Fair prices for your tickets.<br>Powered by AI, trusted by thousands.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <ul>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#pricing">Pricing Examples</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="#terms">Terms of Service</a></li>
+                        <li><a href="#refunds">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="mailto:info@faircharge.com">info@faircharge.com</a></li>
+                        <li><a href="#support">Support Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FairCharge. All rights reserved. Fair prices, every time.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('span');
+                
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                    icon.textContent = '▼';
+                } else {
+                    document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+                    document.querySelectorAll('.faq-question span').forEach(i => i.textContent = '▼');
+                    answer.style.display = 'block';
+                    icon.textContent = '▲';
+                }
+            });
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
