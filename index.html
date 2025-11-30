@@ -486,6 +486,251 @@
                 grid-template-columns: 1fr;
             }
         }
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 700px;
+            width: 100%;
+            margin: 40px auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px 16px 0 0;
+            position: relative;
+            color: white;
+        }
+
+        .modal-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .modal-header p {
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: white;
+            transition: all 0.2s;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.9;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 30px;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        .form-section {
+            margin-bottom: 32px;
+        }
+
+        .form-section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary-blue);
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-blue);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .required {
+            color: #EF4444;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(59, 157, 255, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .file-upload-area {
+            border: 2px dashed #D1D5DB;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--primary-blue);
+            background: rgba(59, 157, 255, 0.05);
+        }
+
+        .file-upload-icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        .file-preview {
+            margin-top: 16px;
+            padding: 12px;
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 157, 255, 0.4);
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading-spinner.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid var(--primary-blue);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+        }
+
+        .validation-results {
+            display: none;
+        }
+
+        .validation-results.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 20px auto;
+            }
+
+            .modal-header,
+            .modal-body {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -516,8 +761,8 @@
             <h1>Get Fair Prices for Your Tickets</h1>
             <p>AI-powered marketplace that gives you honest prices based on real supply and demand. No hidden fees, no unfair markups.</p>
             <div class="hero-buttons">
-                <a href="#how-it-works" class="btn-primary">Learn How It Works</a>
-                <a href="mailto:info@faircharge.com" class="btn-secondary">Get Started</a>
+                <button class="btn-primary" onclick="openSellModal()">Sell Your Ticket</button>
+                <button class="btn-secondary" onclick="openBrowseModal()">Browse Tickets</button>
             </div>
         </div>
     </section>
@@ -625,13 +870,14 @@
                     <h3>NYC to LA</h3>
                     <div class="price-comparison">
                         <span class="original-price">$450</span>
-                        <span class="fair-price">$520</span>
+                        <span class="fair-price">$450</span>
                     </div>
-                    <span class="savings">+$70 Premium</span>
+                    <span class="savings" style="background: #E0E7FF; color: #3730A3;">Original Price (No Tax)</span>
                     <div class="pricing-details">
                         <p><strong>Status:</strong> Flight 95% sold out</p>
                         <p><strong>Demand:</strong> High (Holiday weekend)</p>
                         <p><strong>Process:</strong> Name change required</p>
+                        <p style="margin-top: 8px; font-size: 0.9em; color: var(--text-gray);">Resell at original price (no tax). No premiums allowed to prevent ticket hoarding.</p>
                     </div>
                 </div>
 
@@ -641,13 +887,14 @@
                     <h3>Taylor Swift - Miami</h3>
                     <div class="price-comparison">
                         <span class="original-price">$250</span>
-                        <span class="fair-price">$380</span>
+                        <span class="fair-price">$250</span>
                     </div>
-                    <span class="savings">+$130 Premium</span>
+                    <span class="savings" style="background: #E0E7FF; color: #3730A3;">Original Price (No Tax)</span>
                     <div class="pricing-details">
                         <p><strong>Status:</strong> Sold out venue</p>
                         <p><strong>Demand:</strong> Very High</p>
                         <p><strong>Process:</strong> Direct transfer</p>
+                        <p style="margin-top: 8px; font-size: 0.9em; color: var(--text-gray);">Resell at original price (no tax). No premiums allowed to prevent ticket hoarding.</p>
                     </div>
                 </div>
 
@@ -744,6 +991,205 @@
         </div>
     </section>
 
+    <!-- Browse Tickets Modal -->
+    <div id="browseTicketsModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 1000px;">
+            <div class="modal-header">
+                <h2>Browse Available Tickets</h2>
+                <p>All tickets listed at original price - no premiums</p>
+                <button class="modal-close" onclick="closeBrowseModal()">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Filters -->
+                <div class="browse-filters" style="margin-bottom: 24px; padding: 20px; background: var(--bg-light); border-radius: 12px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                        <div>
+                            <label style="display: block; font-weight: 500; margin-bottom: 8px; color: var(--text-dark);">Ticket Type</label>
+                            <select id="filterTicketType" style="width: 100%; padding: 10px; border: 1px solid #D1D5DB; border-radius: 8px;">
+                                <option value="all">All Types</option>
+                                <option value="flight">Flights</option>
+                                <option value="train">Trains</option>
+                                <option value="bus">Buses</option>
+                                <option value="concert">Concerts</option>
+                                <option value="sports">Sports</option>
+                                <option value="theater">Theater</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 500; margin-bottom: 8px; color: var(--text-dark);">Sort By</label>
+                            <select id="filterSort" style="width: 100%; padding: 10px; border: 1px solid #D1D5DB; border-radius: 8px;">
+                                <option value="newest">Newest First</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="date">Event Date</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; align-items: flex-end;">
+                            <button onclick="applyBrowseFilters()" style="width: 100%; padding: 10px; background: var(--primary-blue); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                                Apply Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tickets Grid -->
+                <div id="ticketsGrid" class="pricing-grid" style="margin-bottom: 0;">
+                    <!-- Tickets will be loaded here -->
+                    <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
+                        <div class="spinner" style="margin: 0 auto 20px;"></div>
+                        <p style="color: var(--text-gray);">Loading available tickets...</p>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" style="display: none; text-align: center; padding: 60px 20px;">
+                    <div style="font-size: 4rem; margin-bottom: 16px;">🎫</div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 12px; color: var(--text-dark);">No Tickets Found</h3>
+                    <p style="color: var(--text-gray); margin-bottom: 24px;">Try adjusting your filters or check back later for new listings.</p>
+                    <button onclick="openSellModal(); closeBrowseModal();" style="padding: 12px 24px; background: var(--primary-blue); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        List Your Ticket
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sell Ticket Modal -->
+    <div id="sellTicketModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Sell Your Ticket</h2>
+                <p>Our AI will validate and price your ticket in minutes</p>
+                <button class="modal-close" onclick="closeSellModal()">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="ticketSubmissionForm">
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Basic Information</h3>
+                        
+                        <div class="form-group">
+                            <label>Ticket Type <span class="required">*</span></label>
+                            <select id="ticketType" required>
+                                <option value="">Select ticket type</option>
+                                <option value="flight">Flight</option>
+                                <option value="train">Train</option>
+                                <option value="bus">Bus</option>
+                                <option value="concert">Concert</option>
+                                <option value="sports">Sports Event</option>
+                                <option value="theater">Theater/Show</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Ticket Issuer/Provider <span class="required">*</span></label>
+                            <input type="text" id="ticketIssuer" placeholder="e.g., Delta Airlines, Ticketmaster, Amtrak" required>
+                        </div>
+                    </div>
+
+                    <!-- Event/Route Details -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Event/Route Details</h3>
+                        
+                        <div id="travelFields" style="display: none;">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>From <span class="required">*</span></label>
+                                    <input type="text" id="fromLocation" placeholder="Origin city">
+                                </div>
+                                <div class="form-group">
+                                    <label>To <span class="required">*</span></label>
+                                    <input type="text" id="toLocation" placeholder="Destination city">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="eventFields" style="display: none;">
+                            <div class="form-group">
+                                <label>Event Name <span class="required">*</span></label>
+                                <input type="text" id="eventName" placeholder="e.g., Taylor Swift Concert">
+                            </div>
+                            <div class="form-group">
+                                <label>Venue <span class="required">*</span></label>
+                                <input type="text" id="venue" placeholder="e.g., Madison Square Garden">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Date <span class="required">*</span></label>
+                                <input type="date" id="eventDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Time</label>
+                                <input type="time" id="eventTime">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pricing Information -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Pricing Information</h3>
+                        
+                        <div class="form-group">
+                            <label>Original Purchase Price (excluding taxes) <span class="required">*</span></label>
+                            <input type="number" id="originalPrice" placeholder="0.00" step="0.01" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Seat/Class Information</label>
+                            <input type="text" id="seatInfo" placeholder="e.g., Economy, Seat 12A, Section 204">
+                        </div>
+                    </div>
+
+                    <!-- Booking Details -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Booking Details</h3>
+                        
+                        <div class="form-group">
+                            <label>Booking Reference/Confirmation Number <span class="required">*</span></label>
+                            <input type="text" id="confirmationNumber" placeholder="e.g., ABC123" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Upload Ticket Image/PDF <span class="required">*</span></label>
+                            <div class="file-upload-area" id="fileUploadArea">
+                                <div class="file-upload-icon">📎</div>
+                                <p><strong>Click to upload</strong> or drag and drop</p>
+                                <p style="font-size: 0.9rem; color: var(--text-gray);">PNG, JPG, PDF (max 10MB)</p>
+                                <input type="file" id="ticketFile" accept="image/*,.pdf" style="display: none;" required>
+                            </div>
+                            <div id="filePreview" class="file-preview" style="display: none;"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Additional Details</label>
+                            <textarea id="additionalDetails" placeholder="Any special notes, restrictions, or transferability information..."></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        Validate & Price My Ticket
+                    </button>
+                </form>
+
+                <!-- Loading State -->
+                <div id="loadingSpinner" class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p class="loading-text" id="loadingText">Analyzing your ticket with AI...</p>
+                </div>
+
+                <!-- Validation Results -->
+                <div id="validationResults" class="validation-results">
+                    <!-- Results will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -771,7 +1217,7 @@
                 <div class="footer-section">
                     <h3>Contact</h3>
                     <ul>
-                        <li><a href="mailto:info@faircharge.com">info@faircharge.com</a></li>
+                        <li><a href="/cdn-cgi/l/email-protection#eb82858d84ab8d8a829988838a998c8ec5888486"><span class="__cf_email__" data-cfemail="01686f676e41676068736269607366642f626e6c">[email&#160;protected]</span></a></li>
                         <li><a href="#support">Support Center</a></li>
                     </ul>
                 </div>
@@ -782,7 +1228,157 @@
         </div>
     </footer>
 
-    <script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // ===================================
+        // FIREBASE CONFIGURATION
+        // ===================================
+        // TODO: Replace with your Firebase config from Firebase Console
+        // Go to Project Settings > Your apps > Web app > Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBVyI2lc3bsIHfYCnN19cW7nXScL32btIE",
+  authDomain: "faircharge-tickets.firebaseapp.com",
+  projectId: "faircharge-tickets",
+  storageBucket: "faircharge-tickets.firebasestorage.app",
+  messagingSenderId: "884268471778",
+  appId: "1:884268471778:web:79e04b6ebb4090fd5a15bb"
+        };
+
+        // Initialize Firebase
+        let db = null;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            console.log('✅ Firebase initialized successfully');
+        } catch (error) {
+            console.warn('⚠️ Firebase not configured. Using demo mode.');
+            console.log('📝 To enable database: Replace firebaseConfig with your Firebase credentials');
+        }
+
+        // ===================================
+        // TICKET DATA HANDLING
+        // ===================================
+        
+        // Function to save ticket to Firestore (NON-PII only)
+        async function saveTicketToDatabase(ticketData) {
+            if (!db) {
+                console.log('Demo mode: Ticket would be saved:', ticketData);
+                return { id: 'demo-' + Date.now() };
+            }
+
+            try {
+                // Only save non-sensitive information
+                const safeTicketData = {
+                    ticketType: ticketData.ticketType,
+                    route: ticketData.route || null,
+                    eventName: ticketData.eventName || null,
+                    venue: ticketData.venue || null,
+                    date: ticketData.date,
+                    time: ticketData.time || null,
+                    seatInfo: ticketData.seatInfo || null,
+                    originalPrice: parseFloat(ticketData.originalPrice),
+                    currentPrice: parseFloat(ticketData.originalPrice), // Always original price
+                    status: 'available',
+                    demand: calculateDemand(ticketData),
+                    listingDate: new Date().toISOString(),
+                    provider: ticketData.provider || null
+                };
+
+                const docRef = await db.collection('tickets').add(safeTicketData);
+                console.log('✅ Ticket saved with ID:', docRef.id);
+                return { id: docRef.id };
+            } catch (error) {
+                console.error('❌ Error saving ticket:', error);
+                throw error;
+            }
+        }
+
+        // Function to calculate demand level
+        function calculateDemand(ticketData) {
+            // Simple demand calculation based on type and date
+            const daysUntilEvent = Math.floor((new Date(ticketData.date) - new Date()) / (1000 * 60 * 60 * 24));
+            
+            if (ticketData.ticketType === 'concert' || ticketData.ticketType === 'sports') {
+                return daysUntilEvent < 7 ? 'high' : 'medium';
+            }
+            if (ticketData.ticketType === 'flight') {
+                return daysUntilEvent < 3 ? 'high' : daysUntilEvent < 14 ? 'medium' : 'low';
+            }
+            return 'medium';
+        }
+
+        // Function to load tickets from database
+        async function loadTicketsFromDatabase(filters = {}) {
+            if (!db) {
+                console.log('Demo mode: Returning sample tickets');
+                return getSampleTickets();
+            }
+
+            try {
+                let query = db.collection('tickets').where('status', '==', 'available');
+                
+                // Apply filters
+                if (filters.ticketType && filters.ticketType !== 'all') {
+                    query = query.where('ticketType', '==', filters.ticketType);
+                }
+
+                const snapshot = await query.orderBy('listingDate', 'desc').limit(50).get();
+                
+                const tickets = [];
+                snapshot.forEach(doc => {
+                    tickets.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+
+                console.log(`✅ Loaded ${tickets.length} tickets from database`);
+                return tickets;
+            } catch (error) {
+                console.error('❌ Error loading tickets:', error);
+                return getSampleTickets();
+            }
+        }
+
+        // Sample tickets for demo mode
+        function getSampleTickets() {
+            return [
+                {
+                    id: 'sample-1',
+                    ticketType: 'concert',
+                    eventName: 'Taylor Swift - Miami',
+                    venue: 'Hard Rock Stadium',
+                    date: '2024-12-31',
+                    time: '20:00',
+                    seatInfo: 'Section 204',
+                    originalPrice: 250,
+                    currentPrice: 250,
+                    status: 'available',
+                    demand: 'high',
+                    listingDate: new Date().toISOString()
+                },
+                {
+                    id: 'sample-2',
+                    ticketType: 'train',
+                    route: 'Boston to NYC',
+                    date: '2024-12-15',
+                    time: '14:30',
+                    seatInfo: 'Coach',
+                    originalPrice: 65,
+                    currentPrice: 65,
+                    status: 'available',
+                    demand: 'low',
+                    listingDate: new Date().toISOString()
+                }
+            ];
+        }
+
+        // ===================================
+        // EXISTING JAVASCRIPT (FAQ, etc.)
+        // ===================================
         // FAQ Accordion
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
@@ -807,9 +1403,320 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
+        });
+
+        // Modal Functions
+        function openSellModal() {
+            document.getElementById('sellTicketModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSellModal() {
+            document.getElementById('sellTicketModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Browse Tickets Modal Functions
+        async function openBrowseModal() {
+            document.getElementById('browseTicketsModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            await loadAndDisplayTickets();
+        }
+
+        function closeBrowseModal() {
+            document.getElementById('browseTicketsModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Load and display tickets
+        async function loadAndDisplayTickets(filters = {}) {
+            const ticketsGrid = document.getElementById('ticketsGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            // Show loading
+            ticketsGrid.innerHTML = `
+                <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
+                    <div class="spinner" style="margin: 0 auto 20px;"></div>
+                    <p style="color: var(--text-gray);">Loading available tickets...</p>
+                </div>
+            `;
+            emptyState.style.display = 'none';
+
+            try {
+                let tickets = await loadTicketsFromDatabase(filters);
+                
+                // Apply client-side sorting
+                const sortBy = document.getElementById('filterSort')?.value || 'newest';
+                tickets = sortTickets(tickets, sortBy);
+
+                if (tickets.length === 0) {
+                    ticketsGrid.innerHTML = '';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+
+                // Render tickets
+                ticketsGrid.innerHTML = tickets.map(ticket => renderTicketCard(ticket)).join('');
+                emptyState.style.display = 'none';
+                
+            } catch (error) {
+                console.error('Error loading tickets:', error);
+                ticketsGrid.innerHTML = `
+                    <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
+                        <p style="color: var(--warning);">⚠️ Error loading tickets. Please try again.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Sort tickets
+        function sortTickets(tickets, sortBy) {
+            switch(sortBy) {
+                case 'price-low':
+                    return tickets.sort((a, b) => a.currentPrice - b.currentPrice);
+                case 'price-high':
+                    return tickets.sort((a, b) => b.currentPrice - a.currentPrice);
+                case 'date':
+                    return tickets.sort((a, b) => new Date(a.date) - new Date(b.date));
+                case 'newest':
+                default:
+                    return tickets.sort((a, b) => new Date(b.listingDate) - new Date(a.listingDate));
+            }
+        }
+
+        // Render individual ticket card
+        function renderTicketCard(ticket) {
+            const typeEmojis = {
+                flight: '✈️',
+                train: '🚂',
+                bus: '🚌',
+                concert: '🎵',
+                sports: '⚽',
+                theater: '🎭'
+            };
+
+            const demandColors = {
+                high: 'background: #FEE2E2; color: #991B1B;',
+                medium: 'background: #FEF3C7; color: #92400E;',
+                low: 'background: #D1FAE5; color: #065F46;'
+            };
+
+            const title = ticket.eventName || ticket.route || 'Ticket';
+            const subtitle = ticket.venue || '';
+            const formattedDate = new Date(ticket.date).toLocaleDateString('en-US', { 
+                month: 'short', day: 'numeric', year: 'numeric' 
+            });
+
+            return `
+                <div class="pricing-card">
+                    <span class="ticket-type">${typeEmojis[ticket.ticketType] || '🎫'} ${ticket.ticketType.charAt(0).toUpperCase() + ticket.ticketType.slice(1)}</span>
+                    <h3 style="margin-bottom: 8px;">${title}</h3>
+                    ${subtitle ? `<p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 16px;">${subtitle}</p>` : ''}
+                    <div class="price-comparison">
+                        <span class="fair-price">$${ticket.currentPrice}</span>
+                    </div>
+                    <span class="savings" style="background: #E0E7FF; color: #3730A3;">Original Price (No Tax)</span>
+                    <div class="pricing-details">
+                        <p><strong>Date:</strong> ${formattedDate}${ticket.time ? ' at ' + ticket.time : ''}</p>
+                        ${ticket.seatInfo ? `<p><strong>Seat/Class:</strong> ${ticket.seatInfo}</p>` : ''}
+                        <p><strong>Demand:</strong> <span style="padding: 2px 8px; border-radius: 4px; font-size: 0.85rem; ${demandColors[ticket.demand] || demandColors.medium}">${ticket.demand.toUpperCase()}</span></p>
+                        <p style="margin-top: 12px; font-size: 0.85rem; color: var(--text-gray);">Listed ${getTimeAgo(ticket.listingDate)}</p>
+                    </div>
+                    <button onclick="contactSeller('${ticket.id}')" style="width: 100%; margin-top: 16px; padding: 12px; background: var(--primary-blue); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                        Contact Seller
+                    </button>
+                </div>
+            `;
+        }
+
+        // Helper: Get time ago
+        function getTimeAgo(dateString) {
+            const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
+            const intervals = {
+                year: 31536000,
+                month: 2592000,
+                week: 604800,
+                day: 86400,
+                hour: 3600,
+                minute: 60
+            };
+
+            for (const [unit, secondsInUnit] of Object.entries(intervals)) {
+                const interval = Math.floor(seconds / secondsInUnit);
+                if (interval >= 1) {
+                    return `${interval} ${unit}${interval !== 1 ? 's' : ''} ago`;
+                }
+            }
+            return 'just now';
+        }
+
+        // Apply filters
+        async function applyBrowseFilters() {
+            const filters = {
+                ticketType: document.getElementById('filterTicketType').value
+            };
+            await loadAndDisplayTickets(filters);
+        }
+
+        // Contact seller (placeholder)
+        function contactSeller(ticketId) {
+            alert(`Contact seller functionality for ticket ${ticketId} will be implemented.\n\nThis would typically:\n1. Show seller contact info (if available)\n2. Send a message request\n3. Initialize a secure transaction`);
+        }
+
+        // Close modals when clicking outside
+        document.getElementById('browseTicketsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBrowseModal();
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('sellTicketModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSellModal();
+            }
+        });
+
+        // Ticket type change handler
+        document.getElementById('ticketType').addEventListener('change', function() {
+            const travelFields = document.getElementById('travelFields');
+            const eventFields = document.getElementById('eventFields');
+            const value = this.value;
+
+            if (value === 'flight' || value === 'train' || value === 'bus') {
+                travelFields.style.display = 'block';
+                eventFields.style.display = 'none';
+            } else if (value === 'concert' || value === 'sports' || value === 'theater') {
+                travelFields.style.display = 'none';
+                eventFields.style.display = 'block';
+            } else {
+                travelFields.style.display = 'none';
+                eventFields.style.display = 'none';
+            }
+        });
+
+        // File upload handling
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('ticketFile');
+        const filePreview = document.getElementById('filePreview');
+
+        fileUploadArea.addEventListener('click', () => fileInput.click());
+
+        fileUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUploadArea.style.borderColor = 'var(--primary-blue)';
+            fileUploadArea.style.background = 'rgba(59, 157, 255, 0.05)';
+        });
+
+        fileUploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            fileUploadArea.style.borderColor = '#D1D5DB';
+            fileUploadArea.style.background = 'transparent';
+        });
+
+        fileUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUploadArea.style.borderColor = '#D1D5DB';
+            fileUploadArea.style.background = 'transparent';
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                displayFilePreview(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                displayFilePreview(e.target.files[0]);
+            }
+        });
+
+        function displayFilePreview(file) {
+            const fileName = file.name;
+            const fileSize = (file.size / 1024 / 1024).toFixed(2);
+            filePreview.innerHTML = `
+                <p><strong>Selected file:</strong> ${fileName} (${fileSize} MB)</p>
+            `;
+            filePreview.style.display = 'block';
+        }
+
+        // Form submission
+        document.getElementById('ticketSubmissionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Collect form data (NON-PII only for database)
+            const formData = {
+                ticketType: document.getElementById('ticketType').value,
+                provider: document.getElementById('ticketIssuer').value,
+                route: `${document.getElementById('fromLocation')?.value || ''} to ${document.getElementById('toLocation')?.value || ''}`.trim(),
+                eventName: document.getElementById('eventName')?.value || null,
+                venue: document.getElementById('venue')?.value || null,
+                date: document.getElementById('eventDate').value,
+                time: document.getElementById('eventTime').value,
+                originalPrice: document.getElementById('originalPrice').value,
+                seatInfo: document.getElementById('seatInfo').value
+                // NOTE: We do NOT save confirmationNumber, ticketFile, or additionalDetails (may contain PII)
+            };
+            
+            // Hide form, show loading
+            this.style.display = 'none';
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const loadingText = document.getElementById('loadingText');
+            loadingSpinner.classList.add('active');
+            loadingText.textContent = 'Analyzing your ticket with AI...';
+
+            try {
+                // Save to database (non-PII only)
+                setTimeout(async () => {
+                    loadingText.textContent = 'Saving to marketplace...';
+                    
+                    const result = await saveTicketToDatabase(formData);
+                    
+                    loadingSpinner.classList.remove('active');
+                    
+                    const resultsDiv = document.getElementById('validationResults');
+                    resultsDiv.innerHTML = `
+                        <div style="padding: 30px; text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 20px;">✅</div>
+                            <h3 style="font-size: 1.5rem; margin-bottom: 16px; color: var(--success);">Ticket Listed Successfully!</h3>
+                            <p style="margin-bottom: 24px; color: var(--text-gray);">Your ticket is now visible in the marketplace at original price (no tax).</p>
+                            <div style="background: var(--bg-light); padding: 24px; border-radius: 12px; margin-bottom: 16px;">
+                                <p style="font-size: 0.9rem; color: var(--text-gray); margin-bottom: 8px;">Listed Price</p>
+                                <p style="font-size: 2.5rem; font-weight: 700; color: var(--primary-blue); margin: 0;">$${formData.originalPrice}</p>
+                                <p style="font-size: 0.9rem; color: var(--text-gray); margin-top: 8px;">No premiums allowed - prevents hoarding</p>
+                            </div>
+                            <div style="background: #FEF3C7; padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: left;">
+                                <p style="font-size: 0.9rem; color: #92400E; margin: 0;">
+                                    <strong>🔒 Privacy Note:</strong> Only non-sensitive ticket details are publicly listed. Your confirmation number, uploaded documents, and personal information are kept private.
+                                </p>
+                            </div>
+                            <button class="btn-submit" onclick="window.location.href='#pricing'; closeSellModal(); this.closest('.modal-body').querySelector('form').reset(); document.getElementById('validationResults').classList.remove('active'); document.getElementById('ticketSubmissionForm').style.display = 'block';">
+                                View My Listing
+                            </button>
+                            <button class="btn-submit" style="background: var(--success); margin-top: 12px;" onclick="this.closest('.modal-body').querySelector('form').reset(); document.getElementById('validationResults').classList.remove('active'); document.getElementById('ticketSubmissionForm').style.display = 'block';">
+                                List Another Ticket
+                            </button>
+                            <button class="btn-secondary" style="width: 100%; margin-top: 12px;" onclick="closeSellModal(); this.closest('.modal-body').querySelector('form').reset(); document.getElementById('validationResults').classList.remove('active'); document.getElementById('ticketSubmissionForm').style.display = 'block';">
+                                Close
+                            </button>
+                        </div>
+                    `;
+                    resultsDiv.classList.add('active');
+                }, 1500);
+                
+            } catch (error) {
+                loadingSpinner.classList.remove('active');
+                alert('Error saving ticket. Please try again.');
+                console.error(error);
+                this.style.display = 'block';
+            }
         });
     </script>
 </body>
