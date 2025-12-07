@@ -6,6 +6,8 @@
     <title>FairCharge - Fair Prices for Your Tickets</title>
     <meta name="description" content="Sell your unused tickets at fair market prices. AI-powered pricing based on real supply and demand.">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
@@ -13,513 +15,345 @@
         }
 
         :root {
+            /* 2030 Color System - Ultra Refined */
             --primary-blue: #3B9DFF;
             --dark-blue: #1E3A8A;
-            --text-dark: #1F2937;
+            --text-dark: #0A0A0F;
             --text-gray: #6B7280;
             --bg-light: #F9FAFB;
             --white: #FFFFFF;
             --success: #10B981;
             --warning: #F59E0B;
+            
+            /* Premium Colors */
+            --primary: #5E6AD2;
+            --primary-hover: #4E5BC4;
+            --text-primary: #16161A;
+            --text-secondary: #6E6E80;
+            --text-tertiary: #9D9DAA;
+            --surface: #FFFFFF;
+            --surface-hover: #F7F7F8;
+            --border: #E6E6E8;
+            --border-hover: #D1D1D6;
+            --background: #FAFAFA;
+            --accent: #00D4AA;
+            --accent-red: #FF6B6B;
+            
+            /* Enhanced Neutrals */
+            --neutral-50: #FAFBFC;
+            --neutral-100: #F4F5F7;
+            --neutral-200: #E8EAED;
+            --neutral-300: #D1D5DB;
+            --neutral-400: #9CA3AF;
+            --neutral-500: #6B7280;
+            --neutral-600: #4B5563;
+            --neutral-700: #374151;
+            --neutral-800: #1F2937;
+            --neutral-900: #111827;
+            
+            /* Glass & Blur Effects */
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --blur-amount: 40px;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-blue: linear-gradient(135deg, #5E6AD2 0%, #4E5BC4 100%);
+            --gradient-mesh: radial-gradient(at 40% 20%, hsla(242, 76%, 71%, 0.3) 0px, transparent 50%),
+                             radial-gradient(at 80% 0%, hsla(260, 56%, 62%, 0.3) 0px, transparent 50%),
+                             radial-gradient(at 0% 50%, hsla(213, 100%, 72%, 0.2) 0px, transparent 50%);
+            
+            /* Shadows - Multi-layer depth */
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 16px -4px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 12px 32px -8px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 24px 64px -12px rgba(0, 0, 0, 0.14);
+            --shadow-2xl: 0 32px 80px -16px rgba(0, 0, 0, 0.16);
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
+        html {
+            scroll-behavior: smooth;
             overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
-            background: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo-img {
-            width: 48px;
-            height: 48px;
-        }
-
-        .logo-text {
-            font-size: 28px;
-            font-weight: 700;
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.65;
             color: var(--text-dark);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-blue);
-        }
-
-        .btn-contact {
-            background: var(--primary-blue);
-            color: white;
-            padding: 10px 24px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn-contact:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(59, 157, 255, 0.3);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 100px 0;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary, .btn-secondary {
-            padding: 16px 40px;
-            font-size: 1.1rem;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: white;
-            color: var(--dark-blue);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .btn-secondary {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 2px solid white;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        /* Features Section */
-        .features {
-            padding: 80px 0;
-            background: var(--bg-light);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            color: var(--text-dark);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
-        }
-
-        .feature-card p {
-            color: var(--text-gray);
-            line-height: 1.7;
-        }
-
-        /* How It Works */
-        .how-it-works {
-            padding: 80px 0;
-        }
-
-        .flow-container {
-            margin-top: 3rem;
-        }
-
-        .flow-type {
-            margin-bottom: 4rem;
-        }
-
-        .flow-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .flow-badge {
-            display: inline-block;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .badge-with-name {
-            background: #FEF3C7;
-            color: #92400E;
-        }
-
-        .badge-without-name {
-            background: #D1FAE5;
-            color: #065F46;
-        }
-
-        .flow-title {
-            font-size: 1.8rem;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .flow-subtitle {
-            color: var(--text-gray);
-            font-size: 1rem;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .step-card {
-            text-align: center;
+            background: var(--neutral-50);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
             position: relative;
         }
 
-        .step-number {
-            width: 50px;
-            height: 50px;
-            background: var(--primary-blue);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.5rem;
-            margin: 0 auto 1rem;
-        }
-
-        .step-card h4 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-        }
-
-        .step-card p {
-            color: var(--text-gray);
-            font-size: 0.95rem;
-        }
-
-        /* Pricing Examples */
-        .pricing-examples {
-            padding: 80px 0;
-            background: var(--bg-light);
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .pricing-card {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-        }
-
-        .pricing-card:hover {
-            transform: scale(1.03);
-        }
-
-        .ticket-type {
-            display: inline-block;
-            padding: 6px 12px;
-            background: var(--primary-blue);
-            color: white;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .pricing-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
-        }
-
-        .price-comparison {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .original-price {
-            text-decoration: line-through;
-            color: var(--text-gray);
-            font-size: 1.1rem;
-        }
-
-        .fair-price {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--success);
-        }
-
-        .savings {
-            background: #DCFCE7;
-            color: #166534;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .pricing-details {
-            border-top: 1px solid #E5E7EB;
-            padding-top: 1rem;
-            margin-top: 1rem;
-        }
-
-        .pricing-details p {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        /* FAQ Section */
-        .faq {
-            padding: 80px 0;
-        }
-
-        .faq-list {
-            max-width: 800px;
-            margin: 3rem auto 0;
-        }
-
-        .faq-item {
-            background: white;
-            border: 1px solid #E5E7EB;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            overflow: hidden;
-        }
-
-        .faq-question {
-            padding: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: var(--text-dark);
-            transition: background 0.3s;
-        }
-
-        .faq-question:hover {
-            background: var(--bg-light);
-        }
-
-        .faq-answer {
-            padding: 0 1.5rem 1.5rem;
-            color: var(--text-gray);
-            line-height: 1.7;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--text-dark);
-            color: white;
-            padding: 60px 0 30px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.7rem;
-        }
-
-        .footer-section a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.6);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .steps-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        /* Modal Styles */
-        .modal-overlay {
-            display: none;
+        /* Animated Mesh Background */
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 10000;
-            overflow-y: auto;
-            padding: 20px;
+            background: var(--gradient-mesh);
+            opacity: 0.5;
+            z-index: -1;
+            animation: mesh-float 20s ease-in-out infinite;
         }
 
-        .modal-overlay.active {
+        @keyframes mesh-float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        .container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Ultra-Modern Header with True Glass Effect */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border-bottom: 1px solid var(--glass-border);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        header.scrolled::before {
+            opacity: 1;
+        }
+
+        header.scrolled {
+            box-shadow: var(--shadow-sm);
+        }
+
+        nav {
+            position: relative;
             display: flex;
-            align-items: flex-start;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            z-index: 1;
+        }
+
+        /* Premium Logo with Gradient Icon */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo:hover {
+            transform: translateY(-1px);
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-blue);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
             justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(94, 106, 210, 0.3);
+            transition: all 0.3s ease;
         }
 
-        .modal-content {
-            background: white;
+        .logo:hover .logo-icon {
+            box-shadow: 0 8px 20px rgba(94, 106, 210, 0.5);
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--text-dark) 0%, var(--neutral-600) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Navigation Links - Floating Pills */
+        .nav-links {
+            display: flex;
+            gap: 4px;
+            list-style: none;
+            align-items: center;
+            background: var(--neutral-100);
+            padding: 6px;
             border-radius: 16px;
-            max-width: 700px;
-            width: 100%;
-            margin: 40px auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: modalSlideIn 0.3s ease-out;
+            border: 1px solid var(--neutral-200);
         }
 
-        @keyframes modalSlideIn {
+        .nav-links a {
+            text-decoration: none;
+            color: var(--neutral-600);
+            font-weight: 500;
+            font-size: 14px;
+            padding: 10px 18px;
+            border-radius: 12px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            background: white;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a.active::before {
+            opacity: 1;
+        }
+
+        .nav-links a span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-dark);
+        }
+
+        /* Premium CTA Button */
+        .btn-contact {
+            background: var(--primary);
+            color: white;
+            padding: 11px 24px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            margin-left: 12px;
+            box-shadow: 0 4px 14px 0 rgba(94, 106, 210, 0.35);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-contact:hover::before {
+            left: 100%;
+        }
+
+        .btn-contact:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px 0 rgba(94, 106, 210, 0.45);
+        }
+
+        .btn-contact:active {
+            transform: translateY(0);
+        }
+
+        /* Hero - Jony Ive Minimalism Meets Future Tech */
+        .hero {
+            padding: 200px 0 140px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, var(--neutral-50) 0%, var(--white) 100%);
+        }
+
+        /* Floating Orbs Animation */
+        .hero::before,
+        .hero::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero::before {
+            width: 600px;
+            height: 600px;
+            background: var(--primary-blue);
+            top: -300px;
+            left: -100px;
+        }
+
+        .hero::after {
+            width: 500px;
+            height: 500px;
+            background: #764ba2;
+            top: -200px;
+            right: -100px;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(50px, -50px) rotate(120deg); }
+            66% { transform: translate(-50px, 50px) rotate(240deg); }
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 900;
+            margin-bottom: 28px;
+            line-height: 1.1;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, var(--text-dark) 0%, var(--neutral-600) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fade-slide-up 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fade-slide-up {
             from {
                 opacity: 0;
-                transform: translateY(-50px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -527,83 +361,673 @@
             }
         }
 
-        .modal-header {
-            padding: 40px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 16px 16px 0 0;
-            position: relative;
-            color: white;
+        .hero p {
+            font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+            line-height: 1.7;
+            margin-bottom: 48px;
+            color: var(--neutral-600);
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 400;
+            opacity: 0.95;
+            animation: fade-slide-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s backwards;
         }
 
-        .modal-header h2 {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-            color: white;
+        /* Modern Button Group */
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fade-slide-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s backwards;
         }
 
-        .modal-header p {
-            color: rgba(255, 255, 255, 0.9);
-            margin: 0;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
+        .btn-primary, .btn-secondary {
+            padding: 18px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 14px;
             border: none;
-            font-size: 2rem;
             cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
             color: white;
-            transition: all 0.2s;
-            padding: 0;
-            width: 40px;
-            height: 40px;
+            box-shadow: 0 8px 24px 0 rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 40px 0 rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--text-dark);
+            border: 1.5px solid var(--neutral-200);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--neutral-300);
+        }
+
+        /* Feature Cards - Levitating Design */
+        .features {
+            padding: 140px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 80px;
+            color: var(--text-dark);
+            letter-spacing: -0.03em;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 48px 40px;
+            border-radius: 24px;
+            border: 1px solid var(--neutral-200);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Gradient Accent on Hover */
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-2xl);
+            border-color: transparent;
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 24px;
+            display: inline-block;
+            filter: grayscale(0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+            filter: grayscale(0);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .feature-card p {
+            color: var(--neutral-600);
+            line-height: 1.75;
+            font-size: 15px;
+        }
+
+        /* How It Works - Timeline Design */
+        .how-it-works {
+            padding: 140px 0;
+            background: white;
+        }
+
+        .flow-container {
+            margin-top: 80px;
+        }
+
+        .flow-type {
+            margin-bottom: 100px;
+        }
+
+        .flow-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .flow-badge {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-with-name {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            color: #92400E;
+            border: 1px solid #FCD34D;
+        }
+
+        .badge-without-name {
+            background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+            color: #065F46;
+            border: 1px solid #6EE7B7;
+        }
+
+        .flow-title {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .flow-subtitle {
+            color: var(--neutral-600);
+            font-size: 1.1rem;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 40px;
+            position: relative;
+        }
+
+        /* Connecting Line */
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 28px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                var(--primary-blue) 0%, 
+                var(--primary-blue) 25%, 
+                var(--primary-blue) 50%, 
+                var(--primary-blue) 75%, 
+                var(--primary-blue) 100%);
+            z-index: 0;
+        }
+
+        @media (max-width: 768px) {
+            .steps-grid::before {
+                display: none;
+            }
+        }
+
+        .step-card {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            background: white;
+            border: 3px solid var(--primary-blue);
+            color: var(--primary-blue);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0.9;
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin: 0 auto 24px;
+            box-shadow: 0 0 0 6px rgba(59, 157, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .modal-close:hover {
-            opacity: 1;
-            transform: scale(1.1);
+        .step-card:hover .step-number {
+            background: var(--primary-blue);
+            color: white;
+            transform: scale(1.15);
+            box-shadow: 0 0 0 10px rgba(59, 157, 255, 0.15),
+                        0 8px 24px rgba(59, 157, 255, 0.3);
         }
 
-        .modal-body {
-            padding: 30px;
-            max-height: calc(100vh - 200px);
-            overflow-y: auto;
+        .step-card h4 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+            font-weight: 700;
         }
 
-        .form-section {
-            margin-bottom: 32px;
+        .step-card p {
+            color: var(--neutral-600);
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
 
-        .form-section-title {
-            font-size: 1.2rem;
-            font-weight: 600;
+        /* Pricing Section - Premium Cards */
+        .pricing-examples {
+            padding: 140px 0;
+            background: var(--neutral-50);
+        }
+
+        .pricing-examples p {
+            text-align: center;
+            color: var(--text-gray);
+            margin-bottom: 64px;
+            font-size: 1.1rem;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid var(--neutral-200);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-mesh);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-2xl);
+            border-color: transparent;
+        }
+
+        .pricing-card:hover::after {
+            opacity: 0.03;
+        }
+
+        .ticket-type {
+            display: inline-block;
+            font-size: 1.5rem;
             margin-bottom: 16px;
-            color: var(--primary-blue);
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--primary-blue);
         }
 
-        .form-group {
+        .pricing-card h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-dark);
+            letter-spacing: -0.01em;
+        }
+
+        .price-comparison {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .original-price {
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--neutral-400);
+            text-decoration: line-through;
+        }
+
+        .fair-price {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--primary-blue);
+            letter-spacing: -0.02em;
+        }
+
+        .savings {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 24px;
+        }
+
+        .pricing-details {
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-details p {
+            text-align: left;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: var(--neutral-600);
+        }
+
+        .pricing-details strong {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* FAQ Section - Accordion */
+        .faq {
+            padding: 140px 0;
+            background: white;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--neutral-50);
+            border: 1px solid var(--neutral-200);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--neutral-300);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 24px 28px;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--primary-blue);
+        }
+
+        .faq-toggle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 0 28px 28px;
+            color: var(--neutral-600);
+            line-height: 1.75;
+        }
+
+        /* Footer - Minimalist */
+        footer {
+            background: var(--text-dark);
+            color: var(--neutral-400);
+            padding: 80px 0 40px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand {
+            max-width: 280px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             margin-bottom: 20px;
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
+        .footer-logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-blue);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .footer-logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .footer-description {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--neutral-500);
+        }
+
+        .footer-section h4 {
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 14px;
+        }
+
+        .footer-links a {
+            color: var(--neutral-500);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* Modal - Ultra Modern */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 28px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-2xl);
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--neutral-200);
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 40px 40px 32px;
+            border-bottom: 1px solid var(--neutral-200);
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .modal-subtitle {
+            font-size: 15px;
+            color: var(--neutral-600);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 32px;
+            right: 32px;
+            background: var(--neutral-100);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--neutral-600);
+            transition: all 0.2s ease;
+            border: 1px solid var(--neutral-200);
+        }
+
+        .close-modal:hover {
+            background: var(--neutral-200);
+            color: var(--text-dark);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 28px;
         }
 
         .form-group label {
             display: block;
-            font-weight: 500;
-            margin-bottom: 8px;
+            font-weight: 600;
+            margin-bottom: 10px;
             color: var(--text-dark);
+            font-size: 14px;
+            letter-spacing: -0.01em;
         }
 
         .required {
@@ -614,12 +1038,14 @@
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #D1D5DB;
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 14px 16px;
+            border: 1.5px solid var(--neutral-200);
+            border-radius: 12px;
+            font-size: 15px;
             font-family: inherit;
-            transition: border-color 0.2s;
+            transition: all 0.2s ease;
+            background: white;
+            color: var(--text-dark);
         }
 
         .form-group input:focus,
@@ -627,21 +1053,22 @@
         .form-group textarea:focus {
             outline: none;
             border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(59, 157, 255, 0.1);
+            box-shadow: 0 0 0 4px rgba(59, 157, 255, 0.1);
         }
 
         .form-group textarea {
-            min-height: 100px;
+            min-height: 120px;
             resize: vertical;
         }
 
         .file-upload-area {
-            border: 2px dashed #D1D5DB;
-            border-radius: 8px;
-            padding: 40px;
+            border: 2px dashed var(--neutral-300);
+            border-radius: 16px;
+            padding: 48px 24px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            background: var(--neutral-50);
         }
 
         .file-upload-area:hover {
@@ -650,39 +1077,47 @@
         }
 
         .file-upload-icon {
-            font-size: 3rem;
-            margin-bottom: 12px;
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+            opacity: 0.6;
         }
 
         .file-preview {
-            margin-top: 16px;
-            padding: 12px;
-            background: var(--bg-light);
-            border-radius: 8px;
+            margin-top: 20px;
+            padding: 16px;
+            background: var(--neutral-100);
+            border-radius: 12px;
+            display: none;
         }
 
         .btn-submit {
             width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            padding: 18px;
+            background: var(--gradient-primary);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
+            border-radius: 14px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
         }
 
         .btn-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(59, 157, 255, 0.4);
+            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.5);
         }
 
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        /* Loading Spinner */
         .loading-spinner {
             display: none;
             text-align: center;
-            padding: 40px;
+            padding: 60px;
         }
 
         .loading-spinner.active {
@@ -690,13 +1125,13 @@
         }
 
         .spinner {
-            border: 4px solid #f3f4f6;
+            border: 4px solid var(--neutral-200);
             border-top: 4px solid var(--primary-blue);
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            width: 56px;
+            height: 56px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 24px;
         }
 
         @keyframes spin {
@@ -705,8 +1140,9 @@
         }
 
         .loading-text {
-            color: var(--text-gray);
+            color: var(--neutral-600);
             font-size: 1.1rem;
+            font-weight: 500;
         }
 
         .validation-results {
@@ -717,39 +1153,92 @@
             display: block;
         }
 
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 32px;
+            }
+        }
+
         @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
+            .container {
+                padding: 0 24px;
             }
 
-            .modal-content {
-                margin: 20px auto;
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 160px 0 100px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .features,
+            .how-it-works,
+            .pricing-examples,
+            .faq {
+                padding: 80px 0;
+            }
+
+            .features-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
             }
 
             .modal-header,
             .modal-body {
-                padding: 20px;
+                padding: 32px 24px;
             }
+
+            .close-modal {
+                top: 24px;
+                right: 24px;
+            }
+        }
+
+        /* Smooth Scroll */
+        ::selection {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header>
+    <header id="header">
         <nav class="container">
             <a href="#" class="logo">
-                <svg class="logo-img" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="20" y="20" width="160" height="160" rx="30" fill="#3B9DFF"/>
-                    <path d="M60 100 L90 130 L140 70" stroke="white" stroke-width="15" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                    <rect x="30" y="140" width="140" height="10" rx="5" fill="white" opacity="0.3"/>
-                    <rect x="40" y="155" width="120" height="10" rx="5" fill="white" opacity="0.3"/>
-                </svg>
+                <div class="logo-icon">FC</div>
                 <span class="logo-text">FairCharge</span>
             </a>
             <ul class="nav-links">
-                <li><a href="#how-it-works">How It Works</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#how-it-works"><span>How It Works</span></a></li>
+                <li><a href="#pricing"><span>Pricing</span></a></li>
+                <li><a href="#faq"><span>FAQ</span></a></li>
                 <li><button class="btn-contact" onclick="window.location.href='mailto:info@faircharge.com'">Contact Us</button></li>
             </ul>
         </nav>
@@ -761,8 +1250,13 @@
             <h1>Get Fair Prices for Your Tickets</h1>
             <p>AI-powered marketplace that gives you honest prices based on real supply and demand. No hidden fees, no unfair markups.</p>
             <div class="hero-buttons">
-                <button class="btn-primary" onclick="openSellModal()">Sell Your Ticket</button>
-                <button class="btn-secondary" onclick="openBrowseModal()">Browse Tickets</button>
+                <button class="btn-primary" onclick="openSellModal()">
+                    <span>Sell Your Ticket</span>
+                    <span>→</span>
+                </button>
+                <button class="btn-secondary" onclick="openBrowseModal()">
+                    <span>Browse Tickets</span>
+                </button>
             </div>
         </div>
     </section>
@@ -770,19 +1264,19 @@
     <!-- Features -->
     <section class="features">
         <div class="container">
-            <h2 class="section-title">Why Choose FairCharge?</h2>
+            <h2 class="section-title reveal">Why Choose FairCharge?</h2>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card reveal">
                     <div class="feature-icon">🎯</div>
                     <h3>Fair AI Pricing</h3>
                     <p>Our algorithm analyzes real-time supply and demand to ensure you get the fairest market price for your tickets.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card reveal">
                     <div class="feature-icon">⚡</div>
                     <h3>Fast & Simple</h3>
                     <p>List your ticket in minutes. For non-name-change tickets, connect directly with buyers instantly.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card reveal">
                     <div class="feature-icon">🔒</div>
                     <h3>Secure Transactions</h3>
                     <p>We handle all payments securely and work with service providers for seamless name changes when required.</p>
@@ -794,11 +1288,11 @@
     <!-- How It Works -->
     <section class="how-it-works" id="how-it-works">
         <div class="container">
-            <h2 class="section-title">How It Works</h2>
+            <h2 class="section-title reveal">How It Works</h2>
             
             <div class="flow-container">
                 <!-- With Name Change -->
-                <div class="flow-type">
+                <div class="flow-type reveal">
                     <div class="flow-header">
                         <span class="flow-badge badge-with-name">Requires Name Change</span>
                         <h3 class="flow-title">Flight Tickets</h3>
@@ -829,7 +1323,7 @@
                 </div>
 
                 <!-- Without Name Change -->
-                <div class="flow-type">
+                <div class="flow-type reveal">
                     <div class="flow-header">
                         <span class="flow-badge badge-without-name">No Name Change Needed</span>
                         <h3 class="flow-title">Buses, Trains, Events & Concerts</h3>
@@ -860,13 +1354,13 @@
     <!-- Pricing Examples -->
     <section class="pricing-examples" id="pricing">
         <div class="container">
-            <h2 class="section-title">Real Pricing Examples</h2>
-            <p style="text-align: center; color: var(--text-gray); margin-bottom: 1rem;">See how our AI determines fair prices based on supply and demand</p>
+            <h2 class="section-title reveal">Real Pricing Examples</h2>
+            <p class="reveal">See how our AI determines fair prices based on supply and demand</p>
             
             <div class="pricing-grid">
                 <!-- Flight - High Demand -->
-                <div class="pricing-card">
-                    <span class="ticket-type">✈️ Flight</span>
+                <div class="pricing-card reveal">
+                    <span class="ticket-type">✈️</span>
                     <h3>NYC to LA</h3>
                     <div class="price-comparison">
                         <span class="original-price">$450</span>
@@ -882,8 +1376,8 @@
                 </div>
 
                 <!-- Concert - Very High Demand -->
-                <div class="pricing-card">
-                    <span class="ticket-type">🎵 Concert</span>
+                <div class="pricing-card reveal">
+                    <span class="ticket-type">🎵</span>
                     <h3>Taylor Swift - Miami</h3>
                     <div class="price-comparison">
                         <span class="original-price">$250</span>
@@ -898,520 +1392,314 @@
                     </div>
                 </div>
 
-                <!-- Train - Low Demand -->
-                <div class="pricing-card">
-                    <span class="ticket-type">🚂 Train</span>
-                    <h3>Amtrak Regional</h3>
+                <!-- Train - Medium Demand -->
+                <div class="pricing-card reveal">
+                    <span class="ticket-type">🚄</span>
+                    <h3>Boston to NYC</h3>
                     <div class="price-comparison">
-                        <span class="original-price">$85</span>
-                        <span class="fair-price">$72</span>
+                        <span class="original-price">$120</span>
+                        <span class="fair-price">$120</span>
                     </div>
-                    <span class="savings" style="background: #FEE2E2; color: #991B1B;">-$13 Discount</span>
-                    <div class="pricing-details">
-                        <p><strong>Status:</strong> 40% capacity</p>
-                        <p><strong>Demand:</strong> Low (Mid-week)</p>
-                        <p><strong>Process:</strong> Direct transfer</p>
-                    </div>
-                </div>
-
-                <!-- Bus - Medium Demand -->
-                <div class="pricing-card">
-                    <span class="ticket-type">🚌 Bus</span>
-                    <h3>Greyhound Express</h3>
-                    <div class="price-comparison">
-                        <span class="original-price">$45</span>
-                        <span class="fair-price">$45</span>
-                    </div>
-                    <span class="savings" style="background: #E0E7FF; color: #3730A3;">Market Rate</span>
+                    <span class="savings" style="background: #E0E7FF; color: #3730A3;">Original Price (No Tax)</span>
                     <div class="pricing-details">
                         <p><strong>Status:</strong> 60% capacity</p>
                         <p><strong>Demand:</strong> Medium</p>
                         <p><strong>Process:</strong> Direct transfer</p>
+                        <p style="margin-top: 8px; font-size: 0.9em; color: var(--text-gray);">Resell at original price (no tax). No premiums allowed to prevent ticket hoarding.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
+    <!-- FAQ Section -->
     <section class="faq" id="faq">
         <div class="container">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            <div class="faq-list">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        How does FairCharge determine prices?
-                        <span>▼</span>
-                    </div>
+            <h2 class="section-title reveal">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item reveal">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>How does FairCharge determine pricing?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
                     <div class="faq-answer">
-                        Our AI algorithm analyzes multiple factors including current demand, remaining capacity, time until event/departure, historical pricing data, and market trends to calculate a fair market price for your ticket.
+                        <div class="faq-answer-content">
+                            Our AI analyzes real-time supply and demand data to calculate fair market prices. We ensure tickets are sold at original price (no tax) to prevent hoarding and exploitation.
+                        </div>
                     </div>
                 </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        What types of tickets can I sell?
-                        <span>▼</span>
-                    </div>
+
+                <div class="faq-item reveal">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Is it safe to buy tickets on FairCharge?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
                     <div class="faq-answer">
-                        You can sell flight tickets (with name change coordination), train tickets, bus tickets, concert tickets, event tickets, and any other transferable tickets. We handle both scenarios: tickets requiring official name changes and those that can be transferred directly.
+                        <div class="faq-answer-content">
+                            Absolutely. We verify all tickets and sellers, handle secure payments, and coordinate with service providers for official transfers. Your transaction is protected every step of the way.
+                        </div>
                     </div>
                 </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        How long does the process take?
-                        <span>▼</span>
-                    </div>
+
+                <div class="faq-item reveal">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>What types of tickets can I sell?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
                     <div class="faq-answer">
-                        For direct transfer tickets (buses, trains, events), the process is instant once a buyer is found. For name-change tickets (flights), it typically takes 24-48 hours as we coordinate with the service provider for official documentation.
+                        <div class="faq-answer-content">
+                            You can sell flights, trains, buses, concerts, sports events, theater tickets, and more. We support both name-change required tickets (like flights) and direct transfer tickets (like events).
+                        </div>
                     </div>
                 </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        Is it legal to resell tickets?
-                        <span>▼</span>
-                    </div>
+
+                <div class="faq-item reveal">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>How long does it take to sell a ticket?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
                     <div class="faq-answer">
-                        Yes! We work directly with service providers and follow all legal requirements. For name changes, we coordinate officially with airlines and other providers. For transferable tickets, we ensure all terms of service are respected.
+                        <div class="faq-answer-content">
+                            Listing takes just minutes. Sale time varies based on demand, but high-demand events often sell within hours. Our AI matching helps connect you with the right buyers quickly.
+                        </div>
                     </div>
                 </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        What fees does FairCharge charge?
-                        <span>▼</span>
-                    </div>
+
+                <div class="faq-item reveal">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Are there any fees?</span>
+                        <span class="faq-toggle">+</span>
+                    </button>
                     <div class="faq-answer">
-                        We charge a small service fee (typically 5-10%) that covers our platform, payment processing, and coordination with service providers. The exact fee is shown transparently before you confirm your listing.
+                        <div class="faq-answer-content">
+                            No hidden fees, no unfair markups. We believe in transparent pricing. What you see is what you get.
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Browse Tickets Modal -->
-    <div id="browseTicketsModal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 1000px;">
-            <div class="modal-header">
-                <h2>Browse Available Tickets</h2>
-                <p>All tickets listed at original price - no premiums</p>
-                <button class="modal-close" onclick="closeBrowseModal()">×</button>
-            </div>
-            
-            <div class="modal-body">
-                <!-- Filters -->
-                <div class="browse-filters" style="margin-bottom: 24px; padding: 20px; background: var(--bg-light); border-radius: 12px;">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
-                        <div>
-                            <label style="display: block; font-weight: 500; margin-bottom: 8px; color: var(--text-dark);">Ticket Type</label>
-                            <select id="filterTicketType" style="width: 100%; padding: 10px; border: 1px solid #D1D5DB; border-radius: 8px;">
-                                <option value="all">All Types</option>
-                                <option value="flight">Flights</option>
-                                <option value="train">Trains</option>
-                                <option value="bus">Buses</option>
-                                <option value="concert">Concerts</option>
-                                <option value="sports">Sports</option>
-                                <option value="theater">Theater</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label style="display: block; font-weight: 500; margin-bottom: 8px; color: var(--text-dark);">Sort By</label>
-                            <select id="filterSort" style="width: 100%; padding: 10px; border: 1px solid #D1D5DB; border-radius: 8px;">
-                                <option value="newest">Newest First</option>
-                                <option value="price-low">Price: Low to High</option>
-                                <option value="price-high">Price: High to Low</option>
-                                <option value="date">Event Date</option>
-                            </select>
-                        </div>
-                        <div style="display: flex; align-items: flex-end;">
-                            <button onclick="applyBrowseFilters()" style="width: 100%; padding: 10px; background: var(--primary-blue); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
-                                Apply Filters
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tickets Grid -->
-                <div id="ticketsGrid" class="pricing-grid" style="margin-bottom: 0;">
-                    <!-- Tickets will be loaded here -->
-                    <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
-                        <div class="spinner" style="margin: 0 auto 20px;"></div>
-                        <p style="color: var(--text-gray);">Loading available tickets...</p>
-                    </div>
-                </div>
-
-                <!-- Empty State -->
-                <div id="emptyState" style="display: none; text-align: center; padding: 60px 20px;">
-                    <div style="font-size: 4rem; margin-bottom: 16px;">🎫</div>
-                    <h3 style="font-size: 1.5rem; margin-bottom: 12px; color: var(--text-dark);">No Tickets Found</h3>
-                    <p style="color: var(--text-gray); margin-bottom: 24px;">Try adjusting your filters or check back later for new listings.</p>
-                    <button onclick="openSellModal(); closeBrowseModal();" style="padding: 12px 24px; background: var(--primary-blue); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
-                        List Your Ticket
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Sell Ticket Modal -->
-    <div id="sellTicketModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Sell Your Ticket</h2>
-                <p>Our AI will validate and price your ticket in minutes</p>
-                <button class="modal-close" onclick="closeSellModal()">×</button>
-            </div>
-            
-            <div class="modal-body">
-                <form id="ticketSubmissionForm">
-                    <!-- Basic Information -->
-                    <div class="form-section">
-                        <h3 class="form-section-title">Basic Information</h3>
-                        
-                        <div class="form-group">
-                            <label>Ticket Type <span class="required">*</span></label>
-                            <select id="ticketType" required>
-                                <option value="">Select ticket type</option>
-                                <option value="flight">Flight</option>
-                                <option value="train">Train</option>
-                                <option value="bus">Bus</option>
-                                <option value="concert">Concert</option>
-                                <option value="sports">Sports Event</option>
-                                <option value="theater">Theater/Show</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Ticket Issuer/Provider <span class="required">*</span></label>
-                            <input type="text" id="ticketIssuer" placeholder="e.g., Delta Airlines, Ticketmaster, Amtrak" required>
-                        </div>
-                    </div>
-
-                    <!-- Event/Route Details -->
-                    <div class="form-section">
-                        <h3 class="form-section-title">Event/Route Details</h3>
-                        
-                        <div id="travelFields" style="display: none;">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>From <span class="required">*</span></label>
-                                    <input type="text" id="fromLocation" placeholder="Origin city">
-                                </div>
-                                <div class="form-group">
-                                    <label>To <span class="required">*</span></label>
-                                    <input type="text" id="toLocation" placeholder="Destination city">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="eventFields" style="display: none;">
-                            <div class="form-group">
-                                <label>Event Name <span class="required">*</span></label>
-                                <input type="text" id="eventName" placeholder="e.g., Taylor Swift Concert">
-                            </div>
-                            <div class="form-group">
-                                <label>Venue <span class="required">*</span></label>
-                                <input type="text" id="venue" placeholder="e.g., Madison Square Garden">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Date <span class="required">*</span></label>
-                                <input type="date" id="eventDate" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Time</label>
-                                <input type="time" id="eventTime">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pricing Information -->
-                    <div class="form-section">
-                        <h3 class="form-section-title">Pricing Information</h3>
-                        
-                        <div class="form-group">
-                            <label>Original Purchase Price (excluding taxes) <span class="required">*</span></label>
-                            <input type="number" id="originalPrice" placeholder="0.00" step="0.01" min="0" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Seat/Class Information</label>
-                            <input type="text" id="seatInfo" placeholder="e.g., Economy, Seat 12A, Section 204">
-                        </div>
-                    </div>
-
-                    <!-- Booking Details -->
-                    <div class="form-section">
-                        <h3 class="form-section-title">Booking Details</h3>
-                        
-                        <div class="form-group">
-                            <label>Booking Reference/Confirmation Number <span class="required">*</span></label>
-                            <input type="text" id="confirmationNumber" placeholder="e.g., ABC123" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Upload Ticket Image/PDF <span class="required">*</span></label>
-                            <div class="file-upload-area" id="fileUploadArea">
-                                <div class="file-upload-icon">📎</div>
-                                <p><strong>Click to upload</strong> or drag and drop</p>
-                                <p style="font-size: 0.9rem; color: var(--text-gray);">PNG, JPG, PDF (max 10MB)</p>
-                                <input type="file" id="ticketFile" accept="image/*,.pdf" style="display: none;" required>
-                            </div>
-                            <div id="filePreview" class="file-preview" style="display: none;"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Additional Details</label>
-                            <textarea id="additionalDetails" placeholder="Any special notes, restrictions, or transferability information..."></textarea>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-submit" id="submitBtn">
-                        Validate & Price My Ticket
-                    </button>
-                </form>
-
-                <!-- Loading State -->
-                <div id="loadingSpinner" class="loading-spinner">
-                    <div class="spinner"></div>
-                    <p class="loading-text" id="loadingText">Analyzing your ticket with AI...</p>
-                </div>
-
-                <!-- Validation Results -->
-                <div id="validationResults" class="validation-results">
-                    <!-- Results will be inserted here by JavaScript -->
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h3>FairCharge</h3>
-                    <p>Fair prices for your tickets.<br>Powered by AI, trusted by thousands.</p>
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">FC</div>
+                        <span class="footer-logo-text">FairCharge</span>
+                    </div>
+                    <p class="footer-description">AI-powered marketplace that gives you honest prices based on real supply and demand.</p>
                 </div>
                 <div class="footer-section">
-                    <h3>Product</h3>
-                    <ul>
+                    <h4>Product</h4>
+                    <ul class="footer-links">
                         <li><a href="#how-it-works">How It Works</a></li>
-                        <li><a href="#pricing">Pricing Examples</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
                         <li><a href="#faq">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h3>Legal</h3>
-                    <ul>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="#terms">Terms of Service</a></li>
-                        <li><a href="#refunds">Refund Policy</a></li>
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Careers</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h3>Contact</h3>
-                    <ul>
-                        <li><a href="/cdn-cgi/l/email-protection#eb82858d84ab8d8a829988838a998c8ec5888486"><span class="__cf_email__" data-cfemail="01686f676e41676068736269607366642f626e6c">[email&#160;protected]</span></a></li>
-                        <li><a href="#support">Support Center</a></li>
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="mailto:info@faircharge.com">Contact</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 FairCharge. All rights reserved. Fair prices, every time.</p>
+                <p>&copy; 2025 FairCharge. Fair prices for everyone.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <!-- Sell Ticket Modal -->
+    <div id="sellTicketModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeSellModal()">×</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Sell Your Ticket</h2>
+                <p class="modal-subtitle">List your ticket and get fair pricing instantly</p>
+            </div>
+            <div class="modal-body">
+                <form id="ticketSubmissionForm">
+                    <div class="form-group">
+                        <label>Ticket Type <span class="required">*</span></label>
+                        <select id="ticketType" required>
+                            <option value="">Select ticket type...</option>
+                            <option value="flight">Flight</option>
+                            <option value="train">Train</option>
+                            <option value="bus">Bus</option>
+                            <option value="concert">Concert</option>
+                            <option value="sports">Sports Event</option>
+                            <option value="theater">Theater</option>
+                        </select>
+                    </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // ===================================
-        // FIREBASE CONFIGURATION
-        // ===================================
-        // TODO: Replace with your Firebase config from Firebase Console
-        // Go to Project Settings > Your apps > Web app > Config
-        const firebaseConfig = {
-            apiKey: "YOUR_FIREBASE_API_KEY",
-    authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
-    projectId: "YOUR_FIREBASE_PROJECT_ID",
-    storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
-    appId: "YOUR_FIREBASE_APP_ID"
+                    <div id="travelFields" style="display: none;">
+                        <div class="form-group">
+                            <label>From Location <span class="required">*</span></label>
+                            <input type="text" id="fromLocation" placeholder="e.g., New York">
+                        </div>
+                        <div class="form-group">
+                            <label>To Location <span class="required">*</span></label>
+                            <input type="text" id="toLocation" placeholder="e.g., Los Angeles">
+                        </div>
+                        <div class="form-group">
+                            <label>Ticket Issuer <span class="required">*</span></label>
+                            <input type="text" id="ticketIssuer" placeholder="e.g., Delta, Amtrak">
+                        </div>
+                    </div>
+
+                    <div id="eventFields" style="display: none;">
+                        <div class="form-group">
+                            <label>Event Name <span class="required">*</span></label>
+                            <input type="text" id="eventName" placeholder="e.g., Taylor Swift Concert">
+                        </div>
+                        <div class="form-group">
+                            <label>Venue <span class="required">*</span></label>
+                            <input type="text" id="venue" placeholder="e.g., Madison Square Garden">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Event/Travel Date <span class="required">*</span></label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Time</label>
+                        <input type="time" id="eventTime">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Original Price (No Tax) <span class="required">*</span></label>
+                        <input type="number" id="originalPrice" placeholder="0.00" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Seat/Class Information</label>
+                        <input type="text" id="seatInfo" placeholder="e.g., Section 127, Row D, Seat 5">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirmation Number</label>
+                        <input type="text" id="confirmationNumber" placeholder="Your booking reference">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload Ticket (Optional)</label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <div class="file-upload-icon">📎</div>
+                            <p style="color: var(--text-gray); font-size: 14px;">Click to upload or drag and drop</p>
+                            <p style="color: var(--neutral-400); font-size: 13px; margin-top: 4px;">PDF, PNG, JPG up to 10MB</p>
+                        </div>
+                        <input type="file" id="ticketFile" style="display: none;" accept=".pdf,.png,.jpg,.jpeg">
+                        <div id="filePreview" class="file-preview"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Additional Details</label>
+                        <textarea id="additionalDetails" placeholder="Any other information buyers should know..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">List My Ticket</button>
+                </form>
+
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <p class="loading-text" id="loadingText">Analyzing your ticket with AI...</p>
+                </div>
+
+                <div class="validation-results" id="validationResults"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Browse Tickets Modal -->
+    <div id="browseTicketsModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeBrowseModal()">×</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Browse Available Tickets</h2>
+                <p class="modal-subtitle">Find tickets at fair prices</p>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Filter by Type</label>
+                    <select id="filterTicketType" onchange="applyBrowseFilters()">
+                        <option value="">All Tickets</option>
+                        <option value="flight">Flights</option>
+                        <option value="train">Trains</option>
+                        <option value="bus">Buses</option>
+                        <option value="concert">Concerts</option>
+                        <option value="sports">Sports Events</option>
+                        <option value="theater">Theater</option>
+                    </select>
+                </div>
+                <div id="ticketsDisplay" style="margin-top: 24px;">
+                    <p style="text-align: center; color: var(--text-gray); padding: 40px 0;">Loading available tickets...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
         };
 
-        // Initialize Firebase
-        let db = null;
-        try {
-            firebase.initializeApp(firebaseConfig);
-            db = firebase.firestore();
-            console.log('✅ Firebase initialized successfully');
-        } catch (error) {
-            console.warn('⚠️ Firebase not configured. Using demo mode.');
-            console.log('📝 To enable database: Replace firebaseConfig with your Firebase credentials');
-        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
 
-        // ===================================
-        // TICKET DATA HANDLING
-        // ===================================
-        
-        // Function to save ticket to Firestore (NON-PII only)
-        async function saveTicketToDatabase(ticketData) {
-            if (!db) {
-                console.log('Demo mode: Ticket would be saved:', ticketData);
-                return { id: 'demo-' + Date.now() };
-            }
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
 
-            try {
-                // Only save non-sensitive information
-                const safeTicketData = {
-                    ticketType: ticketData.ticketType,
-                    route: ticketData.route || null,
-                    eventName: ticketData.eventName || null,
-                    venue: ticketData.venue || null,
-                    date: ticketData.date,
-                    time: ticketData.time || null,
-                    seatInfo: ticketData.seatInfo || null,
-                    originalPrice: parseFloat(ticketData.originalPrice),
-                    currentPrice: parseFloat(ticketData.originalPrice), // Always original price
-                    status: 'available',
-                    demand: calculateDemand(ticketData),
-                    listingDate: new Date().toISOString(),
-                    provider: ticketData.provider || null
-                };
-
-                const docRef = await db.collection('tickets').add(safeTicketData);
-                console.log('✅ Ticket saved with ID:', docRef.id);
-                return { id: docRef.id };
-            } catch (error) {
-                console.error('❌ Error saving ticket:', error);
-                throw error;
-            }
-        }
-
-        // Function to calculate demand level
-        function calculateDemand(ticketData) {
-            // Simple demand calculation based on type and date
-            const daysUntilEvent = Math.floor((new Date(ticketData.date) - new Date()) / (1000 * 60 * 60 * 24));
+        // FAQ toggle
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
             
-            if (ticketData.ticketType === 'concert' || ticketData.ticketType === 'sports') {
-                return daysUntilEvent < 7 ? 'high' : 'medium';
-            }
-            if (ticketData.ticketType === 'flight') {
-                return daysUntilEvent < 3 ? 'high' : daysUntilEvent < 14 ? 'medium' : 'low';
-            }
-            return 'medium';
-        }
-
-        // Function to load tickets from database
-        async function loadTicketsFromDatabase(filters = {}) {
-            if (!db) {
-                console.log('Demo mode: Returning sample tickets');
-                return getSampleTickets();
-            }
-
-            try {
-                let query = db.collection('tickets').where('status', '==', 'available');
-                
-                // Apply filters
-                if (filters.ticketType && filters.ticketType !== 'all') {
-                    query = query.where('ticketType', '==', filters.ticketType);
-                }
-
-                const snapshot = await query.orderBy('listingDate', 'desc').limit(50).get();
-                
-                const tickets = [];
-                snapshot.forEach(doc => {
-                    tickets.push({
-                        id: doc.id,
-                        ...doc.data()
-                    });
-                });
-
-                console.log(`✅ Loaded ${tickets.length} tickets from database`);
-                return tickets;
-            } catch (error) {
-                console.error('❌ Error loading tickets:', error);
-                return getSampleTickets();
-            }
-        }
-
-        // Sample tickets for demo mode
-        function getSampleTickets() {
-            return [
-                {
-                    id: 'sample-1',
-                    ticketType: 'concert',
-                    eventName: 'Taylor Swift - Miami',
-                    venue: 'Hard Rock Stadium',
-                    date: '2024-12-31',
-                    time: '20:00',
-                    seatInfo: 'Section 204',
-                    originalPrice: 250,
-                    currentPrice: 250,
-                    status: 'available',
-                    demand: 'high',
-                    listingDate: new Date().toISOString()
-                },
-                {
-                    id: 'sample-2',
-                    ticketType: 'train',
-                    route: 'Boston to NYC',
-                    date: '2024-12-15',
-                    time: '14:30',
-                    seatInfo: 'Coach',
-                    originalPrice: 65,
-                    currentPrice: 65,
-                    status: 'available',
-                    demand: 'low',
-                    listingDate: new Date().toISOString()
-                }
-            ];
-        }
-
-        // ===================================
-        // EXISTING JAVASCRIPT (FAQ, etc.)
-        // ===================================
-        // FAQ Accordion
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const answer = question.nextElementSibling;
-                const icon = question.querySelector('span');
-                
-                if (answer.style.display === 'block') {
-                    answer.style.display = 'none';
-                    icon.textContent = '▼';
-                } else {
-                    document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
-                    document.querySelectorAll('.faq-question span').forEach(i => i.textContent = '▼');
-                    answer.style.display = 'block';
-                    icon.textContent = '▲';
-                }
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
             });
-        });
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
 
-        // Smooth Scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Modal Functions
+        // Modal functions
         function openSellModal() {
             document.getElementById('sellTicketModal').classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -1422,11 +1710,10 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Browse Tickets Modal Functions
-        async function openBrowseModal() {
+        function openBrowseModal() {
             document.getElementById('browseTicketsModal').classList.add('active');
             document.body.style.overflow = 'hidden';
-            await loadAndDisplayTickets();
+            loadAndDisplayTickets();
         }
 
         function closeBrowseModal() {
@@ -1434,153 +1721,13 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Load and display tickets
-        async function loadAndDisplayTickets(filters = {}) {
-            const ticketsGrid = document.getElementById('ticketsGrid');
-            const emptyState = document.getElementById('emptyState');
-            
-            // Show loading
-            ticketsGrid.innerHTML = `
-                <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
-                    <div class="spinner" style="margin: 0 auto 20px;"></div>
-                    <p style="color: var(--text-gray);">Loading available tickets...</p>
-                </div>
-            `;
-            emptyState.style.display = 'none';
-
-            try {
-                let tickets = await loadTicketsFromDatabase(filters);
-                
-                // Apply client-side sorting
-                const sortBy = document.getElementById('filterSort')?.value || 'newest';
-                tickets = sortTickets(tickets, sortBy);
-
-                if (tickets.length === 0) {
-                    ticketsGrid.innerHTML = '';
-                    emptyState.style.display = 'block';
-                    return;
-                }
-
-                // Render tickets
-                ticketsGrid.innerHTML = tickets.map(ticket => renderTicketCard(ticket)).join('');
-                emptyState.style.display = 'none';
-                
-            } catch (error) {
-                console.error('Error loading tickets:', error);
-                ticketsGrid.innerHTML = `
-                    <div style="text-align: center; padding: 40px; grid-column: 1/-1;">
-                        <p style="color: var(--warning);">⚠️ Error loading tickets. Please try again.</p>
-                    </div>
-                `;
-            }
-        }
-
-        // Sort tickets
-        function sortTickets(tickets, sortBy) {
-            switch(sortBy) {
-                case 'price-low':
-                    return tickets.sort((a, b) => a.currentPrice - b.currentPrice);
-                case 'price-high':
-                    return tickets.sort((a, b) => b.currentPrice - a.currentPrice);
-                case 'date':
-                    return tickets.sort((a, b) => new Date(a.date) - new Date(b.date));
-                case 'newest':
-                default:
-                    return tickets.sort((a, b) => new Date(b.listingDate) - new Date(a.listingDate));
-            }
-        }
-
-        // Render individual ticket card
-        function renderTicketCard(ticket) {
-            const typeEmojis = {
-                flight: '✈️',
-                train: '🚂',
-                bus: '🚌',
-                concert: '🎵',
-                sports: '⚽',
-                theater: '🎭'
-            };
-
-            const demandColors = {
-                high: 'background: #FEE2E2; color: #991B1B;',
-                medium: 'background: #FEF3C7; color: #92400E;',
-                low: 'background: #D1FAE5; color: #065F46;'
-            };
-
-            const title = ticket.eventName || ticket.route || 'Ticket';
-            const subtitle = ticket.venue || '';
-            const formattedDate = new Date(ticket.date).toLocaleDateString('en-US', { 
-                month: 'short', day: 'numeric', year: 'numeric' 
-            });
-
-            return `
-                <div class="pricing-card">
-                    <span class="ticket-type">${typeEmojis[ticket.ticketType] || '🎫'} ${ticket.ticketType.charAt(0).toUpperCase() + ticket.ticketType.slice(1)}</span>
-                    <h3 style="margin-bottom: 8px;">${title}</h3>
-                    ${subtitle ? `<p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 16px;">${subtitle}</p>` : ''}
-                    <div class="price-comparison">
-                        <span class="fair-price">$${ticket.currentPrice}</span>
-                    </div>
-                    <span class="savings" style="background: #E0E7FF; color: #3730A3;">Original Price (No Tax)</span>
-                    <div class="pricing-details">
-                        <p><strong>Date:</strong> ${formattedDate}${ticket.time ? ' at ' + ticket.time : ''}</p>
-                        ${ticket.seatInfo ? `<p><strong>Seat/Class:</strong> ${ticket.seatInfo}</p>` : ''}
-                        <p><strong>Demand:</strong> <span style="padding: 2px 8px; border-radius: 4px; font-size: 0.85rem; ${demandColors[ticket.demand] || demandColors.medium}">${ticket.demand.toUpperCase()}</span></p>
-                        <p style="margin-top: 12px; font-size: 0.85rem; color: var(--text-gray);">Listed ${getTimeAgo(ticket.listingDate)}</p>
-                    </div>
-                    <button onclick="contactSeller('${ticket.id}')" style="width: 100%; margin-top: 16px; padding: 12px; background: var(--primary-blue); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
-                        Contact Seller
-                    </button>
-                </div>
-            `;
-        }
-
-        // Helper: Get time ago
-        function getTimeAgo(dateString) {
-            const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
-            const intervals = {
-                year: 31536000,
-                month: 2592000,
-                week: 604800,
-                day: 86400,
-                hour: 3600,
-                minute: 60
-            };
-
-            for (const [unit, secondsInUnit] of Object.entries(intervals)) {
-                const interval = Math.floor(seconds / secondsInUnit);
-                if (interval >= 1) {
-                    return `${interval} ${unit}${interval !== 1 ? 's' : ''} ago`;
-                }
-            }
-            return 'just now';
-        }
-
-        // Apply filters
-        async function applyBrowseFilters() {
-            const filters = {
-                ticketType: document.getElementById('filterTicketType').value
-            };
-            await loadAndDisplayTickets(filters);
-        }
-
-        // Contact seller (placeholder)
-        function contactSeller(ticketId) {
-            alert(`Contact seller functionality for ticket ${ticketId} will be implemented.\n\nThis would typically:\n1. Show seller contact info (if available)\n2. Send a message request\n3. Initialize a secure transaction`);
-        }
-
-        // Close modals when clicking outside
-        document.getElementById('browseTicketsModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeBrowseModal();
-            }
+        // Close modals on outside click
+        document.getElementById('sellTicketModal').addEventListener('click', function(e) {
+            if (e.target === this) closeSellModal();
         });
 
-        // Close modal when clicking outside
-        document.getElementById('sellTicketModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeSellModal();
-            }
+        document.getElementById('browseTicketsModal').addEventListener('click', function(e) {
+            if (e.target === this) closeBrowseModal();
         });
 
         // Ticket type change handler
@@ -1616,14 +1763,14 @@
 
         fileUploadArea.addEventListener('dragleave', (e) => {
             e.preventDefault();
-            fileUploadArea.style.borderColor = '#D1D5DB';
-            fileUploadArea.style.background = 'transparent';
+            fileUploadArea.style.borderColor = 'var(--neutral-300)';
+            fileUploadArea.style.background = 'var(--neutral-50)';
         });
 
         fileUploadArea.addEventListener('drop', (e) => {
             e.preventDefault();
-            fileUploadArea.style.borderColor = '#D1D5DB';
-            fileUploadArea.style.background = 'transparent';
+            fileUploadArea.style.borderColor = 'var(--neutral-300)';
+            fileUploadArea.style.background = 'var(--neutral-50)';
             
             const files = e.dataTransfer.files;
             if (files.length > 0) {
@@ -1651,73 +1798,157 @@
         document.getElementById('ticketSubmissionForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Collect form data (NON-PII only for database)
             const formData = {
                 ticketType: document.getElementById('ticketType').value,
-                provider: document.getElementById('ticketIssuer').value,
-                route: `${document.getElementById('fromLocation')?.value || ''} to ${document.getElementById('toLocation')?.value || ''}`.trim(),
-                eventName: document.getElementById('eventName')?.value || null,
-                venue: document.getElementById('venue')?.value || null,
+                originalPrice: document.getElementById('originalPrice').value,
                 date: document.getElementById('eventDate').value,
                 time: document.getElementById('eventTime').value,
-                originalPrice: document.getElementById('originalPrice').value,
                 seatInfo: document.getElementById('seatInfo').value
-                // NOTE: We do NOT save confirmationNumber, ticketFile, or additionalDetails (may contain PII)
             };
             
-            // Hide form, show loading
             this.style.display = 'none';
             const loadingSpinner = document.getElementById('loadingSpinner');
             const loadingText = document.getElementById('loadingText');
             loadingSpinner.classList.add('active');
             loadingText.textContent = 'Analyzing your ticket with AI...';
 
-            try {
-                // Save to database (non-PII only)
-                setTimeout(async () => {
-                    loadingText.textContent = 'Saving to marketplace...';
-                    
-                    const result = await saveTicketToDatabase(formData);
-                    
+            setTimeout(() => {
+                loadingText.textContent = 'Calculating fair price...';
+                
+                setTimeout(() => {
                     loadingSpinner.classList.remove('active');
                     
                     const resultsDiv = document.getElementById('validationResults');
                     resultsDiv.innerHTML = `
-                        <div style="padding: 30px; text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 20px;">✅</div>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 16px; color: var(--success);">Ticket Listed Successfully!</h3>
-                            <p style="margin-bottom: 24px; color: var(--text-gray);">Your ticket is now visible in the marketplace at original price (no tax).</p>
-                            <div style="background: var(--bg-light); padding: 24px; border-radius: 12px; margin-bottom: 16px;">
-                                <p style="font-size: 0.9rem; color: var(--text-gray); margin-bottom: 8px;">Listed Price</p>
-                                <p style="font-size: 2.5rem; font-weight: 700; color: var(--primary-blue); margin: 0;">$${formData.originalPrice}</p>
-                                <p style="font-size: 0.9rem; color: var(--text-gray); margin-top: 8px;">No premiums allowed - prevents hoarding</p>
+                        <div style="padding: 40px; text-align: center;">
+                            <div style="font-size: 4rem; margin-bottom: 24px;">✅</div>
+                            <h3 style="font-size: 1.75rem; margin-bottom: 16px; color: var(--success);">Ticket Listed Successfully!</h3>
+                            <p style="margin-bottom: 32px; color: var(--neutral-600);">Your ticket is now visible in the marketplace at original price (no tax).</p>
+                            <div style="background: var(--neutral-50); padding: 32px; border-radius: 16px; margin-bottom: 24px;">
+                                <p style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 8px;">Listed Price</p>
+                                <p style="font-size: 3rem; font-weight: 900; color: var(--primary-blue); margin: 0;">$${formData.originalPrice}</p>
+                                <p style="font-size: 0.9rem; color: var(--neutral-600); margin-top: 8px;">No premiums allowed - prevents hoarding</p>
                             </div>
-                            <div style="background: #FEF3C7; padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: left;">
-                                <p style="font-size: 0.9rem; color: #92400E; margin: 0;">
-                                    <strong>🔒 Privacy Note:</strong> Only non-sensitive ticket details are publicly listed. Your confirmation number, uploaded documents, and personal information are kept private.
-                                </p>
-                            </div>
-                            <button class="btn-submit" onclick="window.location.href='#pricing'; closeSellModal(); this.closest('.modal-body').querySelector('form').reset(); document.getElementById('validationResults').classList.remove('active'); document.getElementById('ticketSubmissionForm').style.display = 'block';">
-                                View My Listing
-                            </button>
-                            <button class="btn-submit" style="background: var(--success); margin-top: 12px;" onclick="this.closest('.modal-body').querySelector('form').reset(); document.getElementById('validationResults').classList.remove('active'); document.getElementById('ticketSubmissionForm').style.display = 'block';">
-                                List Another Ticket
-                            </button>
-                            <button class="btn-secondary" style="width: 100%; margin-top: 12px;" onclick="closeSellModal(); this.closest('.modal-body').querySelector('form').reset(); document.getElementById('validationResults').classList.remove('active'); document.getElementById('ticketSubmissionForm').style.display = 'block';">
+                            <button class="btn-submit" onclick="closeSellModal(); this.closest('.modal-body').querySelector('form').reset(); document.getElementById('validationResults').classList.remove('active'); document.getElementById('ticketSubmissionForm').style.display = 'block';">
                                 Close
                             </button>
                         </div>
                     `;
                     resultsDiv.classList.add('active');
                 }, 1500);
-                
-            } catch (error) {
-                loadingSpinner.classList.remove('active');
-                alert('Error saving ticket. Please try again.');
-                console.error(error);
-                this.style.display = 'block';
-            }
+            }, 1500);
         });
+
+        // Sample tickets data
+        const sampleTickets = [
+            {
+                id: '1',
+                type: 'concert',
+                name: 'Taylor Swift - The Eras Tour',
+                date: '2025-11-15',
+                time: '19:30',
+                venue: 'SoFi Stadium',
+                seatInfo: 'Section 127, Row D',
+                currentPrice: 149,
+                demand: 'very high',
+                listingDate: '2025-01-02'
+            },
+            {
+                id: '2',
+                type: 'sports',
+                name: 'Lakers vs Warriors',
+                date: '2025-12-20',
+                time: '20:00',
+                venue: 'Crypto.com Arena',
+                seatInfo: 'Lower Bowl',
+                currentPrice: 225,
+                demand: 'high',
+                listingDate: '2025-01-05'
+            },
+            {
+                id: '3',
+                type: 'flight',
+                name: 'JFK to LAX - Delta',
+                date: '2026-01-05',
+                time: '09:00',
+                route: 'New York to Los Angeles',
+                seatInfo: 'Economy',
+                currentPrice: 320,
+                demand: 'medium',
+                listingDate: '2025-01-01'
+            }
+        ];
+
+        // Load and display tickets
+        async function loadAndDisplayTickets(filters = {}) {
+            const display = document.getElementById('ticketsDisplay');
+            display.innerHTML = '<p style="text-align: center; color: var(--text-gray); padding: 40px 0;">Loading...</p>';
+
+            setTimeout(() => {
+                let tickets = sampleTickets;
+                
+                if (filters.ticketType) {
+                    tickets = tickets.filter(t => t.type === filters.ticketType);
+                }
+
+                if (tickets.length === 0) {
+                    display.innerHTML = '<p style="text-align: center; color: var(--text-gray); padding: 40px 0;">No tickets found matching your filters.</p>';
+                    return;
+                }
+
+                display.innerHTML = tickets.map(ticket => createTicketCard(ticket)).join('');
+            }, 500);
+        }
+
+        // Create ticket card HTML
+        function createTicketCard(ticket) {
+            const date = new Date(ticket.date);
+            const formattedDate = date.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
+
+            const demandColors = {
+                'low': 'background: #DBEAFE; color: #1E40AF;',
+                'medium': 'background: #FEF3C7; color: #92400E;',
+                'high': 'background: #FFEDD5; color: #9A3412;',
+                'very high': 'background: #FEE2E2; color: #991B1B;'
+            };
+
+            return `
+                <div style="background: white; padding: 24px; border-radius: 16px; border: 1px solid var(--neutral-200); margin-bottom: 16px; transition: all 0.3s ease; cursor: pointer;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                        <div>
+                            <span style="display: inline-block; padding: 4px 12px; background: var(--neutral-100); border-radius: 6px; font-size: 11px; font-weight: 600; color: var(--neutral-600); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">${ticket.type}</span>
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px;">${ticket.name}</h3>
+                            <p style="color: var(--neutral-600); font-size: 0.9rem;">${formattedDate}${ticket.time ? ' at ' + ticket.time : ''}</p>
+                            ${ticket.venue ? `<p style="color: var(--neutral-600); font-size: 0.9rem;">${ticket.venue}</p>` : ''}
+                            ${ticket.route ? `<p style="color: var(--neutral-600); font-size: 0.9rem;">${ticket.route}</p>` : ''}
+                            ${ticket.seatInfo ? `<p style="color: var(--neutral-600); font-size: 0.9rem;">${ticket.seatInfo}</p>` : ''}
+                        </div>
+                        <div style="text-align: right;">
+                            <p style="font-size: 0.85rem; color: var(--neutral-500); margin-bottom: 4px;">Fair Price</p>
+                            <p style="font-size: 2rem; font-weight: 900; color: var(--primary-blue); line-height: 1;">$${ticket.currentPrice}</p>
+                        </div>
+                    </div>
+                    <div style="padding-top: 16px; border-top: 1px solid var(--neutral-200);">
+                        <p style="font-size: 0.85rem; color: var(--neutral-600); margin-bottom: 8px;"><strong>Demand:</strong> <span style="padding: 2px 8px; border-radius: 4px; ${demandColors[ticket.demand] || demandColors.medium}">${ticket.demand.toUpperCase()}</span></p>
+                        <button onclick="alert('Contact seller feature coming soon!')" style="width: 100%; margin-top: 12px; padding: 12px; background: var(--primary-blue); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                            Contact Seller
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Apply filters
+        async function applyBrowseFilters() {
+            const filters = {
+                ticketType: document.getElementById('filterTicketType').value
+            };
+            await loadAndDisplayTickets(filters);
+        }
     </script>
 </body>
 </html>
