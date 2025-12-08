@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FairCharge - Fair Prices for Your Tickets</title>
     <meta name="description" content="Sell your unused tickets at fair market prices. AI-powered pricing based on real supply and demand.">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -971,8 +977,19 @@
 
         .modal-header {
             padding: 40px 40px 32px;
-            border-bottom: 1px solid var(--neutral-200);
+            border-bottom: 2px solid var(--neutral-200);
             position: relative;
+            background: linear-gradient(135deg, rgba(94, 106, 210, 0.08) 0%, rgba(59, 157, 255, 0.06) 100%);
+        }
+        
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-blue);
         }
 
         .modal-title {
@@ -1038,13 +1055,13 @@
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 14px 16px;
-            border: 1.5px solid var(--neutral-200);
-            border-radius: 12px;
+            padding: 15px 18px;
+            border: 2px solid var(--neutral-200);
+            border-radius: 14px;
             font-size: 15px;
             font-family: inherit;
-            transition: all 0.2s ease;
-            background: white;
+            transition: all 0.3s ease;
+            background: var(--neutral-50);
             color: var(--text-dark);
         }
 
@@ -1052,8 +1069,17 @@
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 4px rgba(59, 157, 255, 0.1);
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(94, 106, 210, 0.12);
+        }
+        
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%234B5563' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            padding-right: 45px;
         }
 
         .form-group textarea {
@@ -1062,55 +1088,57 @@
         }
 
         .file-upload-area {
-            border: 2px dashed var(--neutral-300);
-            border-radius: 16px;
-            padding: 48px 24px;
+            border: 3px dashed var(--neutral-300);
+            border-radius: 18px;
+            padding: 52px 28px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: var(--neutral-50);
+            background: linear-gradient(135deg, var(--neutral-50) 0%, var(--neutral-100) 100%);
         }
 
         .file-upload-area:hover {
-            border-color: var(--primary-blue);
-            background: rgba(59, 157, 255, 0.05);
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(94, 106, 210, 0.08) 0%, rgba(59, 157, 255, 0.06) 100%);
+            transform: translateY(-2px);
         }
 
         .file-upload-icon {
             font-size: 3.5rem;
-            margin-bottom: 16px;
-            opacity: 0.6;
+            margin-bottom: 18px;
         }
 
         .file-preview {
             margin-top: 20px;
-            padding: 16px;
-            background: var(--neutral-100);
-            border-radius: 12px;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            border-radius: 14px;
             display: none;
+            color: white;
         }
 
         .btn-submit {
             width: 100%;
-            padding: 18px;
-            background: var(--gradient-primary);
+            padding: 20px 36px;
+            background: var(--gradient-blue);
             color: white;
             border: none;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 20px rgba(94, 106, 210, 0.35);
+            margin-top: 8px;
         }
 
         .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(94, 106, 210, 0.45);
         }
 
         .btn-submit:active {
-            transform: translateY(0);
+            transform: translateY(-1px);
         }
 
         /* Loading Spinner */
@@ -1151,6 +1179,184 @@
 
         .validation-results.active {
             display: block;
+        }
+
+        /* Enhanced Ticket Card Styles */
+        .verification-notice {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border: 3px solid #F59E0B;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: start;
+            gap: 14px;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+        }
+
+        .verification-notice-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .verification-notice-text {
+            color: #92400E;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .ticket-card {
+            background: white;
+            padding: 32px;
+            border-radius: 24px;
+            border: 2px solid var(--neutral-200);
+            margin-bottom: 24px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ticket-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-blue);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .ticket-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary);
+        }
+
+        .ticket-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 24px;
+            gap: 20px;
+        }
+
+        .ticket-type-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--neutral-100) 0%, var(--neutral-200) 100%);
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--neutral-700);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 14px;
+        }
+
+        .ticket-name {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .ticket-info {
+            color: var(--neutral-600);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ticket-price-section {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .price-label {
+            font-size: 0.88rem;
+            color: var(--neutral-500);
+            margin-bottom: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .ticket-price {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .ticket-footer {
+            padding-top: 24px;
+            border-top: 2px solid var(--neutral-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .demand-badge {
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .demand-low {
+            background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
+            color: #1E40AF;
+        }
+
+        .demand-medium {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            color: #92400E;
+        }
+
+        .demand-high {
+            background: linear-gradient(135deg, #FFEDD5 0%, #FED7AA 100%);
+            color: #9A3412;
+        }
+
+        .demand-very-high {
+            background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+            color: #991B1B;
+        }
+
+        .btn-contact {
+            padding: 14px 28px;
+            background: var(--gradient-blue);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(94, 106, 210, 0.3);
+        }
+
+        .btn-contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(94, 106, 210, 0.4);
         }
 
         /* Responsive Design */
@@ -1205,6 +1411,14 @@
             .close-modal {
                 top: 24px;
                 right: 24px;
+            }
+            
+            .ticket-header {
+                flex-direction: column;
+            }
+
+            .ticket-price-section {
+                text-align: left;
             }
         }
 
@@ -1511,7 +1725,7 @@
                     <h4>Support</h4>
                     <ul class="footer-links">
                         <li><a href="#">Help Center</a></li>
-                        <li><a href="mailto:info@faircharge.com">Contact</a></li>
+                        <li><a href="/cdn-cgi/l/email-protection#1c75727a735c7a7d756e7f747d6e7b79327f7371">Contact</a></li>
                         <li><a href="#">Privacy</a></li>
                         <li><a href="#">Terms</a></li>
                     </ul>
@@ -1654,7 +1868,28 @@
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Firebase Configuration - Placeholders will be replaced by GitHub Actions
+        const firebaseConfig = {
+            apiKey: "__FIREBASE_API_KEY__",
+            authDomain: "__FIREBASE_AUTH_DOMAIN__",
+            projectId: "__FIREBASE_PROJECT_ID__",
+            storageBucket: "__FIREBASE_STORAGE_BUCKET__",
+            messagingSenderId: "__FIREBASE_MESSAGING_SENDER_ID__",
+            appId: "__FIREBASE_APP_ID__"
+        };
+
+        // Initialize Firebase
+        let db, storage;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            storage = firebase.storage();
+            console.log('Firebase initialized successfully');
+        } catch (error) {
+            console.error('Firebase initialization error:', error);
+        }
+
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.getElementById('header');
@@ -1798,13 +2033,52 @@
         document.getElementById('ticketSubmissionForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            if (!db) {
+                alert('Firebase is not initialized. Please check your configuration.');
+                return;
+            }
+
+            const ticketType = document.getElementById('ticketType').value;
             const formData = {
-                ticketType: document.getElementById('ticketType').value,
-                originalPrice: document.getElementById('originalPrice').value,
+                ticketType: ticketType,
+                originalPrice: parseFloat(document.getElementById('originalPrice').value),
+                currentPrice: parseFloat(document.getElementById('originalPrice').value),
                 date: document.getElementById('eventDate').value,
-                time: document.getElementById('eventTime').value,
-                seatInfo: document.getElementById('seatInfo').value
+                time: document.getElementById('eventTime').value || '',
+                seatInfo: document.getElementById('seatInfo').value || '',
+                confirmationNumber: document.getElementById('confirmationNumber').value || '',
+                additionalDetails: document.getElementById('additionalDetails').value || '',
+                listingDate: new Date().toISOString(),
+                status: 'available'
             };
+
+            // Add travel-specific fields
+            if (ticketType === 'flight' || ticketType === 'train' || ticketType === 'bus') {
+                formData.fromLocation = document.getElementById('fromLocation')?.value || '';
+                formData.toLocation = document.getElementById('toLocation')?.value || '';
+                formData.provider = document.getElementById('ticketIssuer')?.value || '';
+                formData.name = `${formData.fromLocation} to ${formData.toLocation} - ${formData.provider}`;
+                formData.route = `${formData.fromLocation} to ${formData.toLocation}`;
+            }
+
+            // Add event-specific fields
+            if (ticketType === 'concert' || ticketType === 'sports' || ticketType === 'theater') {
+                formData.eventName = document.getElementById('eventName')?.value || '';
+                formData.venue = document.getElementById('venue')?.value || '';
+                formData.name = formData.eventName;
+            }
+
+            // Calculate demand based on days until event
+            const daysUntilEvent = Math.floor((new Date(formData.date) - new Date()) / (1000 * 60 * 60 * 24));
+            if (daysUntilEvent < 7) {
+                formData.demand = 'very high';
+            } else if (daysUntilEvent < 30) {
+                formData.demand = 'high';
+            } else if (daysUntilEvent < 90) {
+                formData.demand = 'medium';
+            } else {
+                formData.demand = 'low';
+            }
             
             this.style.display = 'none';
             const loadingSpinner = document.getElementById('loadingSpinner');
@@ -1812,9 +2086,23 @@
             loadingSpinner.classList.add('active');
             loadingText.textContent = 'Analyzing your ticket with AI...';
 
-            setTimeout(() => {
+            try {
+                // Upload file if present
+                const fileInput = document.getElementById('ticketFile');
+                if (fileInput && fileInput.files.length > 0) {
+                    loadingText.textContent = 'Uploading ticket image...';
+                    const file = fileInput.files[0];
+                    const storageRef = storage.ref(`tickets/${Date.now()}_${file.name}`);
+                    const uploadTask = await storageRef.put(file);
+                    formData.ticketImageUrl = await uploadTask.ref.getDownloadURL();
+                }
+
                 loadingText.textContent = 'Calculating fair price...';
                 
+                // Add to Firestore
+                const docRef = await db.collection('tickets').add(formData);
+                console.log('Ticket added with ID:', docRef.id);
+
                 setTimeout(() => {
                     loadingSpinner.classList.remove('active');
                     
@@ -1823,81 +2111,82 @@
                         <div style="padding: 40px; text-align: center;">
                             <div style="font-size: 4rem; margin-bottom: 24px;">✅</div>
                             <h3 style="font-size: 1.75rem; margin-bottom: 16px; color: var(--success);">Ticket Listed Successfully!</h3>
-                            <p style="margin-bottom: 32px; color: var(--neutral-600);">Your ticket is now visible in the marketplace at original price (no tax).</p>
-                            <div style="background: var(--neutral-50); padding: 32px; border-radius: 16px; margin-bottom: 24px;">
+                            <p style="margin-bottom: 32px; color: var(--neutral-600);">Your ticket is now live in the marketplace.</p>
+                            <div style="background: linear-gradient(135deg, rgba(94, 106, 210, 0.1) 0%, rgba(59, 157, 255, 0.08) 100%); padding: 32px; border-radius: 16px; margin-bottom: 24px; border: 2px solid var(--primary);">
                                 <p style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 8px;">Listed Price</p>
-                                <p style="font-size: 3rem; font-weight: 900; color: var(--primary-blue); margin: 0;">$${formData.originalPrice}</p>
-                                <p style="font-size: 0.9rem; color: var(--neutral-600); margin-top: 8px;">No premiums allowed - prevents hoarding</p>
+                                <p style="font-size: 3rem; font-weight: 900; background: var(--gradient-blue); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0;">$${formData.originalPrice.toFixed(2)}</p>
+                                <p style="font-size: 0.9rem; color: var(--neutral-600); margin-top: 8px;">Original price (no tax) - prevents hoarding</p>
                             </div>
-                            <button class="btn-submit" onclick="closeSellModal(); this.closest('.modal-body').querySelector('form').reset(); document.getElementById('validationResults').classList.remove('active'); document.getElementById('ticketSubmissionForm').style.display = 'block';">
+                            <button class="btn-submit" onclick="closeSellModal(); resetSellForm();">
                                 Close
                             </button>
                         </div>
                     `;
                     resultsDiv.classList.add('active');
                 }, 1500);
-            }, 1500);
+            } catch (error) {
+                console.error('Error submitting ticket:', error);
+                loadingSpinner.classList.remove('active');
+                alert('Error listing ticket: ' + error.message + '. Please try again.');
+                this.style.display = 'block';
+            }
         });
 
-        // Sample tickets data
-        const sampleTickets = [
-            {
-                id: '1',
-                type: 'concert',
-                name: 'Taylor Swift - The Eras Tour',
-                date: '2025-11-15',
-                time: '19:30',
-                venue: 'SoFi Stadium',
-                seatInfo: 'Section 127, Row D',
-                currentPrice: 149,
-                demand: 'very high',
-                listingDate: '2025-01-02'
-            },
-            {
-                id: '2',
-                type: 'sports',
-                name: 'Lakers vs Warriors',
-                date: '2025-12-20',
-                time: '20:00',
-                venue: 'Crypto.com Arena',
-                seatInfo: 'Lower Bowl',
-                currentPrice: 225,
-                demand: 'high',
-                listingDate: '2025-01-05'
-            },
-            {
-                id: '3',
-                type: 'flight',
-                name: 'JFK to LAX - Delta',
-                date: '2026-01-05',
-                time: '09:00',
-                route: 'New York to Los Angeles',
-                seatInfo: 'Economy',
-                currentPrice: 320,
-                demand: 'medium',
-                listingDate: '2025-01-01'
-            }
-        ];
+        function resetSellForm() {
+            document.getElementById('ticketSubmissionForm').reset();
+            document.getElementById('validationResults').classList.remove('active');
+            document.getElementById('ticketSubmissionForm').style.display = 'block';
+            const travelFields = document.getElementById('travelFields');
+            const eventFields = document.getElementById('eventFields');
+            if (travelFields) travelFields.style.display = 'none';
+            if (eventFields) eventFields.style.display = 'none';
+            const filePreview = document.getElementById('filePreview');
+            if (filePreview) filePreview.style.display = 'none';
+        }
 
+        // Sample tickets data
         // Load and display tickets
         async function loadAndDisplayTickets(filters = {}) {
             const display = document.getElementById('ticketsDisplay');
-            display.innerHTML = '<p style="text-align: center; color: var(--text-gray); padding: 40px 0;">Loading...</p>';
+            display.innerHTML = '<p style="text-align: center; color: var(--text-gray); padding: 40px 0;">Loading tickets...</p>';
 
-            setTimeout(() => {
-                let tickets = sampleTickets;
+            if (!db) {
+                display.innerHTML = '<p style="text-align: center; color: var(--accent-red); padding: 40px 0;">Firebase not initialized. Please check configuration.</p>';
+                return;
+            }
+
+            try {
+                let query = db.collection('tickets').where('status', '==', 'available');
                 
                 if (filters.ticketType) {
-                    tickets = tickets.filter(t => t.type === filters.ticketType);
+                    query = query.where('ticketType', '==', filters.ticketType);
                 }
 
-                if (tickets.length === 0) {
-                    display.innerHTML = '<p style="text-align: center; color: var(--text-gray); padding: 40px 0;">No tickets found matching your filters.</p>';
+                const snapshot = await query.orderBy('listingDate', 'desc').get();
+                
+                if (snapshot.empty) {
+                    display.innerHTML = '<p style="text-align: center; color: var(--text-gray); padding: 40px 0;">No tickets found. Be the first to list! 🎫</p>';
                     return;
                 }
 
-                display.innerHTML = tickets.map(ticket => createTicketCard(ticket)).join('');
-            }, 500);
+                const tickets = [];
+                snapshot.forEach(doc => {
+                    tickets.push({ id: doc.id, ...doc.data() });
+                });
+
+                display.innerHTML = `
+                    <div class="verification-notice">
+                        <div class="verification-notice-icon">⚠️</div>
+                        <div class="verification-notice-text">
+                            Tickets listed at owner's original price. Not yet verified by FairCharge AI.
+                        </div>
+                    </div>
+                    ${tickets.map(ticket => createTicketCard(ticket)).join('')}
+                `;
+            } catch (error) {
+                console.error('Error loading tickets:', error);
+                display.innerHTML = '<p style="text-align: center; color: var(--accent-red); padding: 40px 0;">Error loading tickets: ' + error.message + '</p>';
+            }
         }
 
         // Create ticket card HTML
@@ -1909,37 +2198,47 @@
                 year: 'numeric' 
             });
 
-            const demandColors = {
-                'low': 'background: #DBEAFE; color: #1E40AF;',
-                'medium': 'background: #FEF3C7; color: #92400E;',
-                'high': 'background: #FFEDD5; color: #9A3412;',
-                'very high': 'background: #FEE2E2; color: #991B1B;'
+            const typeEmojis = {
+                'flight': '✈️',
+                'train': '🚄',
+                'bus': '🚌',
+                'concert': '🎵',
+                'sports': '⚽',
+                'theater': '🎭'
             };
 
             return `
-                <div style="background: white; padding: 24px; border-radius: 16px; border: 1px solid var(--neutral-200); margin-bottom: 16px; transition: all 0.3s ease; cursor: pointer;">
-                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
-                        <div>
-                            <span style="display: inline-block; padding: 4px 12px; background: var(--neutral-100); border-radius: 6px; font-size: 11px; font-weight: 600; color: var(--neutral-600); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">${ticket.type}</span>
-                            <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px;">${ticket.name}</h3>
-                            <p style="color: var(--neutral-600); font-size: 0.9rem;">${formattedDate}${ticket.time ? ' at ' + ticket.time : ''}</p>
-                            ${ticket.venue ? `<p style="color: var(--neutral-600); font-size: 0.9rem;">${ticket.venue}</p>` : ''}
-                            ${ticket.route ? `<p style="color: var(--neutral-600); font-size: 0.9rem;">${ticket.route}</p>` : ''}
-                            ${ticket.seatInfo ? `<p style="color: var(--neutral-600); font-size: 0.9rem;">${ticket.seatInfo}</p>` : ''}
+                <div class="ticket-card">
+                    <div class="ticket-header">
+                        <div style="flex: 1;">
+                            <span class="ticket-type-badge">${typeEmojis[ticket.ticketType] || '🎫'} ${ticket.ticketType.toUpperCase()}</span>
+                            <h3 class="ticket-name">${ticket.name}</h3>
+                            <p class="ticket-info">📅 ${formattedDate}${ticket.time ? ' • ' + ticket.time : ''}</p>
+                            ${ticket.venue ? `<p class="ticket-info">📍 ${ticket.venue}</p>` : ''}
+                            ${ticket.route ? `<p class="ticket-info">🗺️ ${ticket.route}</p>` : ''}
+                            ${ticket.seatInfo ? `<p class="ticket-info">💺 ${ticket.seatInfo}</p>` : ''}
                         </div>
-                        <div style="text-align: right;">
-                            <p style="font-size: 0.85rem; color: var(--neutral-500); margin-bottom: 4px;">Fair Price</p>
-                            <p style="font-size: 2rem; font-weight: 900; color: var(--primary-blue); line-height: 1;">$${ticket.currentPrice}</p>
+                        <div class="ticket-price-section">
+                            <p class="price-label">Fair Price</p>
+                            <p class="ticket-price">$${ticket.currentPrice.toFixed(2)}</p>
                         </div>
                     </div>
-                    <div style="padding-top: 16px; border-top: 1px solid var(--neutral-200);">
-                        <p style="font-size: 0.85rem; color: var(--neutral-600); margin-bottom: 8px;"><strong>Demand:</strong> <span style="padding: 2px 8px; border-radius: 4px; ${demandColors[ticket.demand] || demandColors.medium}">${ticket.demand.toUpperCase()}</span></p>
-                        <button onclick="alert('Contact seller feature coming soon!')" style="width: 100%; margin-top: 12px; padding: 12px; background: var(--primary-blue); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
-                            Contact Seller
+                    <div class="ticket-footer">
+                        <div>
+                            <span class="demand-badge demand-${ticket.demand.replace(' ', '-')}">
+                                ${ticket.demand.toUpperCase()}
+                            </span>
+                        </div>
+                        <button onclick="contactSeller('${ticket.id}')" class="btn-contact">
+                            Contact Seller →
                         </button>
                     </div>
                 </div>
             `;
+        }
+
+        function contactSeller(ticketId) {
+            alert('Contact seller feature coming soon! Ticket ID: ' + ticketId);
         }
 
         // Apply filters
@@ -1949,6 +2248,14 @@
             };
             await loadAndDisplayTickets(filters);
         }
+
+        // Close modals on outside click
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
     </script>
 </body>
 </html>
