@@ -1927,71 +1927,89 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Close modals on outside click
-        document.getElementById('sellTicketModal').addEventListener('click', function(e) {
-            if (e.target === this) closeSellModal();
-        });
-
-        document.getElementById('browseTicketsModal').addEventListener('click', function(e) {
-            if (e.target === this) closeBrowseModal();
-        });
-
-        // Ticket type change handler
-        document.getElementById('ticketType').addEventListener('change', function() {
-            const travelFields = document.getElementById('travelFields');
-            const eventFields = document.getElementById('eventFields');
-            const value = this.value;
-
-            if (value === 'flight' || value === 'train' || value === 'bus') {
-                travelFields.style.display = 'block';
-                eventFields.style.display = 'none';
-            } else if (value === 'concert' || value === 'sports' || value === 'theater') {
-                travelFields.style.display = 'none';
-                eventFields.style.display = 'block';
-            } else {
-                travelFields.style.display = 'none';
-                eventFields.style.display = 'none';
-            }
-        });
-
-        // File upload handling
-        const fileUploadArea = document.getElementById('fileUploadArea');
-        const fileInput = document.getElementById('ticketFile');
-        const filePreview = document.getElementById('filePreview');
-
-        fileUploadArea.addEventListener('click', () => fileInput.click());
-
-        fileUploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            fileUploadArea.style.borderColor = 'var(--primary-blue)';
-            fileUploadArea.style.background = 'rgba(59, 157, 255, 0.05)';
-        });
-
-        fileUploadArea.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            fileUploadArea.style.borderColor = 'var(--neutral-300)';
-            fileUploadArea.style.background = 'var(--neutral-50)';
-        });
-
-        fileUploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            fileUploadArea.style.borderColor = 'var(--neutral-300)';
-            fileUploadArea.style.background = 'var(--neutral-50)';
+        // Wait for DOM to be ready before adding event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Close modals on outside click
+            const sellModal = document.getElementById('sellTicketModal');
+            const browseModal = document.getElementById('browseTicketsModal');
             
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                fileInput.files = files;
-                displayFilePreview(files[0]);
+            if (sellModal) {
+                sellModal.addEventListener('click', function(e) {
+                    if (e.target === this) closeSellModal();
+                });
             }
-        });
+            
+            if (browseModal) {
+                browseModal.addEventListener('click', function(e) {
+                    if (e.target === this) closeBrowseModal();
+                });
+            }
+            
+            // Ticket type change handler
+            const ticketTypeSelect = document.getElementById('ticketType');
+            if (ticketTypeSelect) {
+                ticketTypeSelect.addEventListener('change', function() {
+                    const travelFields = document.getElementById('travelFields');
+                    const eventFields = document.getElementById('eventFields');
+                    const value = this.value;
 
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                displayFilePreview(e.target.files[0]);
+                    if (value === 'flight' || value === 'train' || value === 'bus') {
+                        travelFields.style.display = 'block';
+                        eventFields.style.display = 'none';
+                    } else if (value === 'concert' || value === 'sports' || value === 'theater') {
+                        travelFields.style.display = 'none';
+                        eventFields.style.display = 'block';
+                    } else {
+                        travelFields.style.display = 'none';
+                        eventFields.style.display = 'none';
+                    }
+                });
+            }
+            
+            // File upload handling
+            const fileUploadArea = document.getElementById('fileUploadArea');
+            const fileInput = document.getElementById('ticketFile');
+            const filePreview = document.getElementById('filePreview');
+
+            if (fileUploadArea && fileInput) {
+                fileUploadArea.addEventListener('click', () => fileInput.click());
+
+                fileUploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    fileUploadArea.style.borderColor = 'var(--primary-blue)';
+                    fileUploadArea.style.background = 'rgba(59, 157, 255, 0.05)';
+                });
+
+                fileUploadArea.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    fileUploadArea.style.borderColor = 'var(--neutral-300)';
+                    fileUploadArea.style.background = 'var(--neutral-50)';
+                });
+
+                fileUploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    fileUploadArea.style.borderColor = 'var(--neutral-300)';
+                    fileUploadArea.style.background = 'var(--neutral-50)';
+                    
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        fileInput.files = files;
+                        displayFilePreview(files[0]);
+                    }
+                });
+
+                fileInput.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        displayFilePreview(e.target.files[0]);
+                    }
+                });
             }
         });
 
         function displayFilePreview(file) {
+            const filePreview = document.getElementById('filePreview');
+            if (!filePreview) return;
+            
             const fileName = file.name;
             const fileSize = (file.size / 1024 / 1024).toFixed(2);
             filePreview.innerHTML = `
@@ -2000,16 +2018,20 @@
             filePreview.style.display = 'block';
         }
 
-        // Form submission
-        document.getElementById('ticketSubmissionForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+        // Form submission - wrapped in DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('ticketSubmissionForm');
+            if (!form) return;
             
-            if (!db) {
-                alert('Firebase is not initialized. Please check your configuration.');
-                return;
-            }
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                if (!db) {
+                    alert('Firebase is not initialized. Please check your configuration.');
+                    return;
+                }
 
-            const ticketType = document.getElementById('ticketType').value;
+                const ticketType = document.getElementById('ticketType').value;
             console.log('Submitting ticket type:', ticketType);
             
             const formData = {
@@ -2118,6 +2140,7 @@
                 alert('Error listing ticket: ' + error.message + '. Please try again.');
                 this.style.display = 'block';
             }
+            });
         });
 
         function resetSellForm() {
