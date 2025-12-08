@@ -979,17 +979,7 @@
             padding: 40px 40px 32px;
             border-bottom: 2px solid var(--neutral-200);
             position: relative;
-            background: linear-gradient(135deg, rgba(94, 106, 210, 0.08) 0%, rgba(59, 157, 255, 0.06) 100%);
-        }
-        
-        .modal-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-blue);
+            background: linear-gradient(135deg, rgba(94, 106, 210, 0.03) 0%, rgba(59, 157, 255, 0.02) 100%);
         }
 
         .modal-title {
@@ -1307,9 +1297,8 @@
             padding-top: 24px;
             border-top: 2px solid var(--neutral-100);
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            gap: 16px;
         }
 
         .demand-badge {
@@ -1339,24 +1328,6 @@
         .demand-very-high {
             background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
             color: #991B1B;
-        }
-
-        .btn-contact {
-            padding: 14px 28px;
-            background: var(--gradient-blue);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 0.95rem;
-            box-shadow: 0 4px 12px rgba(94, 106, 210, 0.3);
-        }
-
-        .btn-contact:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(94, 106, 210, 0.4);
         }
 
         /* Responsive Design */
@@ -1551,8 +1522,8 @@
                         </div>
                         <div class="step-card">
                             <div class="step-number">2</div>
-                            <h4>Buyers Bid or Buy</h4>
-                            <p>Accept instant offers or let buyers compete through auction</p>
+                            <h4>Buyers Purchase</h4>
+                            <p>Buyers can see your listing at the fair original price</p>
                         </div>
                         <div class="step-card">
                             <div class="step-number">3</div>
@@ -2039,6 +2010,8 @@
             }
 
             const ticketType = document.getElementById('ticketType').value;
+            console.log('Submitting ticket type:', ticketType);
+            
             const formData = {
                 ticketType: ticketType,
                 originalPrice: parseFloat(document.getElementById('originalPrice').value),
@@ -2051,21 +2024,33 @@
                 listingDate: new Date().toISOString(),
                 status: 'available'
             };
+            
+            console.log('Base form data:', formData);
 
             // Add travel-specific fields
             if (ticketType === 'flight' || ticketType === 'train' || ticketType === 'bus') {
                 formData.fromLocation = document.getElementById('fromLocation')?.value || '';
                 formData.toLocation = document.getElementById('toLocation')?.value || '';
                 formData.provider = document.getElementById('ticketIssuer')?.value || '';
-                formData.name = `${formData.fromLocation} to ${formData.toLocation} - ${formData.provider}`;
-                formData.route = `${formData.fromLocation} to ${formData.toLocation}`;
+                if (formData.fromLocation && formData.toLocation) {
+                    formData.name = `${formData.fromLocation} to ${formData.toLocation} - ${formData.provider}`;
+                    formData.route = `${formData.fromLocation} to ${formData.toLocation}`;
+                } else {
+                    formData.name = `${ticketType.charAt(0).toUpperCase() + ticketType.slice(1)} Ticket`;
+                    formData.route = 'Not specified';
+                }
             }
 
             // Add event-specific fields
             if (ticketType === 'concert' || ticketType === 'sports' || ticketType === 'theater') {
                 formData.eventName = document.getElementById('eventName')?.value || '';
                 formData.venue = document.getElementById('venue')?.value || '';
-                formData.name = formData.eventName;
+                formData.name = formData.eventName || `${ticketType.charAt(0).toUpperCase() + ticketType.slice(1)} Ticket`;
+            }
+            
+            // Ensure name is never empty
+            if (!formData.name || formData.name.trim() === '') {
+                formData.name = `${ticketType.charAt(0).toUpperCase() + ticketType.slice(1)} Ticket`;
             }
 
             // Calculate demand based on days until event
@@ -2079,6 +2064,8 @@
             } else {
                 formData.demand = 'low';
             }
+            
+            console.log('Final form data to submit:', formData);
             
             this.style.display = 'none';
             const loadingSpinner = document.getElementById('loadingSpinner');
@@ -2103,27 +2090,28 @@
                 const docRef = await db.collection('tickets').add(formData);
                 console.log('Ticket added with ID:', docRef.id);
 
-                setTimeout(() => {
-                    loadingSpinner.classList.remove('active');
-                    
-                    const resultsDiv = document.getElementById('validationResults');
-                    resultsDiv.innerHTML = `
-                        <div style="padding: 40px; text-align: center;">
-                            <div style="font-size: 4rem; margin-bottom: 24px;">✅</div>
-                            <h3 style="font-size: 1.75rem; margin-bottom: 16px; color: var(--success);">Ticket Listed Successfully!</h3>
-                            <p style="margin-bottom: 32px; color: var(--neutral-600);">Your ticket is now live in the marketplace.</p>
-                            <div style="background: linear-gradient(135deg, rgba(94, 106, 210, 0.1) 0%, rgba(59, 157, 255, 0.08) 100%); padding: 32px; border-radius: 16px; margin-bottom: 24px; border: 2px solid var(--primary);">
-                                <p style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 8px;">Listed Price</p>
-                                <p style="font-size: 3rem; font-weight: 900; background: var(--gradient-blue); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0;">$${formData.originalPrice.toFixed(2)}</p>
-                                <p style="font-size: 0.9rem; color: var(--neutral-600); margin-top: 8px;">Original price (no tax) - prevents hoarding</p>
-                            </div>
-                            <button class="btn-submit" onclick="closeSellModal(); resetSellForm();">
-                                Close
-                            </button>
+                // Small delay for UX, then show success
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                loadingSpinner.classList.remove('active');
+                
+                const resultsDiv = document.getElementById('validationResults');
+                resultsDiv.innerHTML = `
+                    <div style="padding: 40px; text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 24px;">✅</div>
+                        <h3 style="font-size: 1.75rem; margin-bottom: 16px; color: var(--success);">Ticket Listed Successfully!</h3>
+                        <p style="margin-bottom: 32px; color: var(--neutral-600);">Your ticket is now live in the marketplace.</p>
+                        <div style="background: linear-gradient(135deg, rgba(94, 106, 210, 0.1) 0%, rgba(59, 157, 255, 0.08) 100%); padding: 32px; border-radius: 16px; margin-bottom: 24px; border: 2px solid var(--primary);">
+                            <p style="font-size: 0.9rem; color: var(--neutral-600); margin-bottom: 8px;">Listed Price</p>
+                            <p style="font-size: 3rem; font-weight: 900; background: var(--gradient-blue); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0;">$${formData.originalPrice.toFixed(2)}</p>
+                            <p style="font-size: 0.9rem; color: var(--neutral-600); margin-top: 8px;">Original price (no tax) - prevents hoarding</p>
                         </div>
-                    `;
-                    resultsDiv.classList.add('active');
-                }, 1500);
+                        <button class="btn-submit" onclick="closeSellModal(); resetSellForm();">
+                            Close
+                        </button>
+                    </div>
+                `;
+                resultsDiv.classList.add('active');
             } catch (error) {
                 console.error('Error submitting ticket:', error);
                 loadingSpinner.classList.remove('active');
@@ -2224,21 +2212,12 @@
                         </div>
                     </div>
                     <div class="ticket-footer">
-                        <div>
-                            <span class="demand-badge demand-${ticket.demand.replace(' ', '-')}">
-                                ${ticket.demand.toUpperCase()}
-                            </span>
-                        </div>
-                        <button onclick="contactSeller('${ticket.id}')" class="btn-contact">
-                            Contact Seller →
-                        </button>
+                        <span class="demand-badge demand-${ticket.demand.replace(' ', '-')}">
+                            ${ticket.demand.toUpperCase()} DEMAND
+                        </span>
                     </div>
                 </div>
             `;
-        }
-
-        function contactSeller(ticketId) {
-            alert('Contact seller feature coming soon! Ticket ID: ' + ticketId);
         }
 
         // Apply filters
